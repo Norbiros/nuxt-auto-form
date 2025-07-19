@@ -1,3 +1,10 @@
 packages:
   - ./
   - playground
+  - docs/
+
+ignoredBuiltDependencies:
+  - sharp
+
+onlyBuiltDependencies:
+  - better-sqlite3

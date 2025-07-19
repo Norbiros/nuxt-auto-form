@@ -27,6 +27,8 @@
     "dev": "npm run dev:prepare && nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "docs": "pnpm dev:prepare && nuxt dev docs --uiDev",
+    "docs:build": "pnpm dev:prepare && nuxt build docs",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "test": "vitest run",
@@ -55,5 +57,6 @@
     "typescript": "~5.8.3",
     "vitest": "^3.2.4",
     "vue-tsc": "^3.0.1"
-  }
+  },
+  "packageManager": "pnpm@10.13.1"
 }
