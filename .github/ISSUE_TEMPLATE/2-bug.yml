@@ -1,0 +1,34 @@
+name: 🐛 Bug
+description: Report a bug.
+title: '[Bug]: '
+type: bug
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Include a clear and concise description of what should happen and what's actually happening.
+      placeholder: Click on button doesn't...
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Provide an unambiguous set of steps to reproduce this bug.
+      placeholder: |
+        1. Open browser
+        2. Go to
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: additonalcontext
+    attributes:
+      label: Demonstration(s) and additional context
+      description: If applicable, insert screenshots or a live example to help demonstrate your problem, as well as any other useful information here.

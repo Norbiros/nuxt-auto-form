@@ -1,0 +1,13 @@
+name: 🚀 Enhancement
+description: Suggest a enhancement or improvement!
+title: '[Enhancement]: '
+type: enhancement
+body:
+  - type: textarea
+    id: howitworks
+    attributes:
+      label: My idea
+      description: Describe the changes you're suggesting and how they work.
+      placeholder: Add an option to...
+    validations:
+      required: true

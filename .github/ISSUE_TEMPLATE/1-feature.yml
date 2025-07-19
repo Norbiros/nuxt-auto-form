@@ -1,0 +1,13 @@
+name: ✨ Feature
+description: Suggest a feature or improvement!
+title: '[Feat]: '
+type: feature
+body:
+  - type: textarea
+    id: howitworks
+    attributes:
+      label: My suggestion
+      description: Describe the changes you're suggesting and how they work.
+      placeholder: Add an option to...
+    validations:
+      required: true
