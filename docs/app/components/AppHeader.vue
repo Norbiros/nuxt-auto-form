@@ -38,11 +38,12 @@ const { header } = useAppConfig()
       v-else
       #left
     >
-      <NuxtLink :to="header?.to || '/'">
-        <LogoPro class="w-auto h-6 shrink-0" />
+      <NuxtLink
+        :to="header?.to || '/'"
+        class="font-bold text-xl"
+      >
+        Nuxt Auto Form
       </NuxtLink>
-
-      <TemplateMenu />
     </template>
 
     <template #right>

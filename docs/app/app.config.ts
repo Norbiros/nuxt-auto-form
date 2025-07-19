@@ -14,7 +14,7 @@ export default defineAppConfig({
     },
   },
   seo: {
-    siteName: 'Nuxt Docs Template',
+    siteName: 'Nuxt Auto Form',
   },
   header: {
     title: '',
@@ -28,7 +28,7 @@ export default defineAppConfig({
     colorMode: true,
     links: [{
       'icon': 'i-simple-icons-github',
-      'to': 'https://github.com/nuxt-ui-pro/docs',
+      'to': 'https://github.com/Norbiros/nuxt-auto-form',
       'target': '_blank',
       'aria-label': 'GitHub',
     }],
@@ -37,46 +37,31 @@ export default defineAppConfig({
     credits: `Copyright © ${new Date().getFullYear()}`,
     colorMode: false,
     links: [{
-      'icon': 'i-simple-icons-nuxtdotjs',
-      'to': 'https://nuxt.com',
+      'icon': 'i-simple-icons-npm',
+      'to': 'https://www.npmjs.com/package/nuxt-auto-form',
       'target': '_blank',
-      'aria-label': 'Nuxt Website',
-    }, {
-      'icon': 'i-simple-icons-discord',
-      'to': 'https://discord.com/invite/ps2h6QT',
-      'target': '_blank',
-      'aria-label': 'Nuxt UI on Discord',
-    }, {
-      'icon': 'i-simple-icons-x',
-      'to': 'https://x.com/nuxt_js',
-      'target': '_blank',
-      'aria-label': 'Nuxt on X',
+      'aria-label': 'Nuxt Auto Form on npmjs.com',
     }, {
       'icon': 'i-simple-icons-github',
-      'to': 'https://github.com/nuxt/ui',
+      'to': 'https://github.com/Norbiros/nuxt-auto-form',
       'target': '_blank',
-      'aria-label': 'Nuxt UI on GitHub',
+      'aria-label': 'Nuxt Auto Form on GitHub',
     }],
   },
   toc: {
     title: 'Table of Contents',
     bottom: {
       title: 'Community',
-      edit: 'https://github.com/nuxt-ui-pro/docs/edit/main/content',
+      edit: 'https://github.com/Norbiros/nuxt-auto-form/edit/master/docs/content',
       links: [{
         icon: 'i-lucide-star',
         label: 'Star on GitHub',
-        to: 'https://github.com/nuxt/ui',
+        to: 'https://github.com/Norbiros/nuxt-auto-form',
         target: '_blank',
       }, {
-        icon: 'i-lucide-book-open',
-        label: 'Nuxt UI Pro docs',
-        to: 'https://ui.nuxt.com/getting-started/installation/pro/nuxt',
-        target: '_blank',
-      }, {
-        icon: 'i-simple-icons-nuxtdotjs',
-        label: 'Purchase a license',
-        to: 'https://ui.nuxt.com/pro/purchase',
+        icon: 'i-simple-icons-npm',
+        label: 'View on npmjs.com',
+        to: 'https://www.npmjs.com/package/nuxt-auto-form',
         target: '_blank',
       }],
     },
