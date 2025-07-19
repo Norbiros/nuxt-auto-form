@@ -1,14 +1,14 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
 import type { FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
+import UButton from '@nuxt/ui/components/Button.vue'
+import UCheckbox from '@nuxt/ui/components/Checkbox.vue'
 import UForm from '@nuxt/ui/components/Form.vue'
 import UFormField from '@nuxt/ui/components/FormField.vue'
-import UButton from '@nuxt/ui/components/Button.vue'
-import UInputNumber from '@nuxt/ui/components/InputNumber.vue'
 import UInput from '@nuxt/ui/components/Input.vue'
+import UInputNumber from '@nuxt/ui/components/InputNumber.vue'
 import USelect from '@nuxt/ui/components/Select.vue'
-import UCheckbox from '@nuxt/ui/components/Checkbox.vue'
+import { computed, reactive, ref, toRaw, useTemplateRef } from 'vue'
 import * as z from 'zod'
-import { reactive, ref, useTemplateRef, computed, toRaw } from 'vue'
 
 const props = withDefaults(defineProps<{
   schema: T

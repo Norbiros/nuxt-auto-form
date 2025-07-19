@@ -1,4 +1,4 @@
-import {defineNuxtModule, addPlugin, createResolver, addComponent} from '@nuxt/kit'
+import { addComponent, createResolver, defineNuxtModule } from '@nuxt/kit'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
@@ -15,10 +15,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: 'AutoForm', // name of the component to be used in vue templates
-      filePath: resolver.resolve('runtime/components/AutoForm.vue')
+      filePath: resolver.resolve('runtime/components/AutoForm.vue'),
     })
-
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolver.resolve('./runtime/plugin'))
   },
 })

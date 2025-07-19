@@ -1,15 +1,15 @@
 {
-  "private": true,
   "name": "nuxt-auto-form-playground",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
     "generate": "nuxi generate"
   },
   "dependencies": {
-    "nuxt": "^4.0.0",
     "@nuxt/ui": "^3.2.0",
+    "nuxt": "^4.0.0",
     "zod": "^4.0.5"
   }
 }

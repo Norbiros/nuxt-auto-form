@@ -1,10 +1,11 @@
 {
   "name": "nuxt-auto-form",
-  "version": "0.0.1",
-  "description": "Auto-generate Nuxt UI forms from Zod 4 schemas",
-  "repository": "Norbiros/nuxt-auto-form",
-  "license": "MIT",
   "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.13.1",
+  "description": "Auto-generate Nuxt UI forms from Zod 4 schemas",
+  "license": "MIT",
+  "repository": "Norbiros/nuxt-auto-form",
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
@@ -31,20 +32,22 @@
     "docs:build": "pnpm dev:prepare && nuxt build docs",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@nuxt/ui": "^3.2.0",
+    "zod": "^4.0.5"
   },
   "dependencies": {
     "@nuxt/kit": "^4.0.0",
     "@nuxt/ui": "^3.2.0",
     "zod": "^4.0.5"
   },
-  "peerDependencies": {
-    "@nuxt/ui": "^3.2.0",
-    "zod": "^4.0.5"
-  },
   "devDependencies": {
+    "@antfu/eslint-config": "^4.17.0",
     "@nuxt/devtools": "^2.6.2",
     "@nuxt/eslint-config": "^1.5.2",
     "@nuxt/module-builder": "^1.0.1",
@@ -53,10 +56,10 @@
     "@types/node": "latest",
     "changelogen": "^0.6.2",
     "eslint": "^9.30.1",
+    "eslint-plugin-format": "^1.0.1",
     "nuxt": "^4.0.0",
     "typescript": "~5.8.3",
     "vitest": "^3.2.4",
     "vue-tsc": "^3.0.1"
-  },
-  "packageManager": "pnpm@10.13.1"
+  }
 }
