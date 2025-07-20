@@ -2,6 +2,7 @@ export default defineNuxtConfig({
   modules: [
     '../src/module',
     '@nuxt/ui',
+    '@nuxt/test-utils/module',
   ],
   devtools: { enabled: true },
 

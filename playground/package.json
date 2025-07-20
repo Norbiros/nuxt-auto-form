@@ -5,11 +5,23 @@
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "e2e:codegen": "playwright codegen http://localhost:3000",
     "generate": "nuxi generate"
   },
   "dependencies": {
     "@nuxt/ui": "^3.2.0",
     "nuxt": "^4.0.0",
     "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@nuxt/test-utils": "^3.19.2",
+    "@playwright/test": "^1.54.1",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^18.0.1",
+    "playwright-core": "^1.54.1",
+    "vitest": "^3.2.4",
+    "vitest-fail-on-console": "^0.7.1"
   }
 }

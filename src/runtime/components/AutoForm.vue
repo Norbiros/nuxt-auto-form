@@ -7,7 +7,9 @@ import UFormField from '@nuxt/ui/components/FormField.vue'
 import UInput from '@nuxt/ui/components/Input.vue'
 import UInputNumber from '@nuxt/ui/components/InputNumber.vue'
 import USelect from '@nuxt/ui/components/Select.vue'
+import { splitByCase, upperFirst } from 'scule'
 import { computed, reactive, ref, toRaw, useTemplateRef } from 'vue'
+
 import * as z from 'zod'
 
 const props = withDefaults(defineProps<{
@@ -82,7 +84,7 @@ function getComponentForZodType(key: string, zodType: any) {
     key,
     formField: {
       name: key,
-      label: meta.title ?? key,
+      label: meta.title ?? upperFirst(splitByCase(key).join(' ').toLowerCase()),
       description: meta.description,
       class: meta.autoForm?.floatRight ? 'flex items-center justify-between text-left' : '',
     },

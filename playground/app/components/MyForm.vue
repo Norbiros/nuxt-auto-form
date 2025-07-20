@@ -18,7 +18,6 @@ const schema = z.object({
     .meta({ title: 'Enum Input' }),
   text_description: z.string()
     .meta({
-      title: 'Text Input',
       description: 'with description',
     }),
   custom_bool: z.boolean()

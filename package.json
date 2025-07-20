@@ -33,9 +33,8 @@
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "e2e": "cd playground && pnpm e2e",
+    "typecheck": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "peerDependencies": {
     "@nuxt/ui": "^3.2.0",
@@ -44,6 +43,7 @@
   "dependencies": {
     "@nuxt/kit": "^4.0.0",
     "@nuxt/ui": "^3.2.0",
+    "scule": "^1.3.0",
     "zod": "^4.0.5"
   },
   "devDependencies": {

@@ -45,5 +45,17 @@ jobs:
       - name: Playground prepare
         run: npm run dev:prepare
 
-      - name: Test
-        run: npm run test
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Cache Playwright binaries
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Prepare for e2e tests
+        run: pnpm dlx playwright install chromium --with-deps
+
+      - name: E2E Test
+        run: pnpm run e2e
