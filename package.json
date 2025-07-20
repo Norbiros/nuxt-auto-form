@@ -31,8 +31,8 @@
     "docs:dev": "pnpm dev:prepare && nuxt dev docs --uiDev",
     "docs:build": "pnpm dev:prepare && nuxt build docs",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint . && eslint docs",
+    "lint:fix": "eslint . --fix && eslint docs --fix",
     "e2e": "cd playground && pnpm e2e",
     "typecheck": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
