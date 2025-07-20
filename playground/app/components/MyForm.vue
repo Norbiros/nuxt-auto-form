@@ -39,7 +39,7 @@ const schema = z.object({
     :schema="schema"
     @submit="data => console.log(data)"
   >
-    <template #is_vegetarian="{ field, state }">
+    <template #custom_bool="{ field, state }">
       <USelect
         v-model="state[field]"
         :items="[
