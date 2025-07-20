@@ -18,6 +18,22 @@ export default defineNuxtModule<ModuleOptions>({
 
     const resolver = createResolver(import.meta.url)
 
+    addTypeTemplate({
+      filename: 'types/nuxt-auto-form.d.ts',
+      getContents: () => `
+        declare module 'zod' {
+          interface GlobalMeta {
+            /** Configuration related to \`nuxt-auto-form\` Nuxt module */
+            autoForm?: {
+              /** Float input box to the right of the label */
+              floatRight?: boolean
+            }
+          }
+        }
+
+        export {}`,
+    })
+
     addComponent({
       name: 'AutoForm', // name of the component to be used in vue templates
       filePath: resolver.resolve('runtime/components/AutoForm.vue'),
