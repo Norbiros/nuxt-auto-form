@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
 import type { FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
+import { useAppConfig } from '#app'
 import UButton from '@nuxt/ui/components/Button.vue'
 import UCheckbox from '@nuxt/ui/components/Checkbox.vue'
 import UForm from '@nuxt/ui/components/Form.vue'
@@ -8,6 +9,7 @@ import UInput from '@nuxt/ui/components/Input.vue'
 import UInputNumber from '@nuxt/ui/components/InputNumber.vue'
 import USelect from '@nuxt/ui/components/Select.vue'
 import { splitByCase, upperFirst } from 'scule'
+
 import { computed, reactive, ref, toRaw, useTemplateRef } from 'vue'
 
 import * as z from 'zod'
@@ -107,6 +109,10 @@ async function onSubmit(event: FormSubmitEvent<Output>) {
 function submit() {
   formRef.value?.submit()
 }
+
+const submitButtonComponent = computed(() => {
+  return useAppConfig().autoForm.submitButtonComponent?.toString()
+})
 </script>
 
 <template>
@@ -137,13 +143,16 @@ function submit() {
     </UFormField>
 
     <div class="space-y-2">
+      <div v-if="submitButtonComponent">
+        <component :is="toRaw(submitButtonComponent)" v-bind="{ disabled: isButtonEnabled }" />
+      </div>
       <UButton
+        v-else
         type="submit"
         :disabled="!isButtonEnabled"
         :class="isButtonEnabled ? 'bg-primary' : ''"
-      >
-        Send
-      </UButton>
+        label="Send"
+      />
     </div>
   </UForm>
 </template>

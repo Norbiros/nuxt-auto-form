@@ -32,12 +32,19 @@ const schema = z.object({
     .array(z.enum(ENUM_MULTIPLE))
     .meta({ title: 'Multiple Enum Input' }),
 })
+
+function onSubmit(data: Record<string, any>) {
+  useToast().add({
+    title: 'Form submitted',
+    description: JSON.stringify(data, null, 2),
+  })
+}
 </script>
 
 <template>
   <AutoForm
     :schema="schema"
-    @submit="data => console.log(data)"
+    @submit="onSubmit"
   >
     <template #custom_bool="{ field, state }">
       <USelect
