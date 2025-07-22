@@ -20,8 +20,12 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     addTypeTemplate({
-      filename: 'types/nuxt-auto-form.d.ts',
-      src: resolver.resolve('index.d.ts'),
+      filename: 'runtime/types/nuxt-auto-form.d.ts',
+      src: resolver.resolve('runtime/types/index.d.ts'),
+    })
+    addTypeTemplate({
+      filename: 'runtime/types/nuxt-auto-form-zod.d.ts',
+      src: resolver.resolve('runtime/types/zod.d.ts'),
     })
 
     addComponent({
