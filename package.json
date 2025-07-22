@@ -4,8 +4,20 @@
   "version": "0.0.1",
   "packageManager": "pnpm@10.13.1",
   "description": "Auto-generate Nuxt UI forms from Zod 4 schemas",
+  "author": {
+    "email": "me@norbiros.dev",
+    "name": "Norbiros",
+    "url": "https://norbiros.dev"
+  },
   "license": "MIT",
   "repository": "Norbiros/nuxt-auto-form",
+  "keywords": [
+    "nuxt",
+    "nuxt-ui",
+    "zod",
+    "forms",
+    "auto-form"
+  ],
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
@@ -25,12 +37,13 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "npm run dev:prepare && nuxi dev playground",
+    "dev": "pnpm run dev:prepare && nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "docs:dev": "pnpm dev:prepare && nuxt dev docs --uiDev",
     "docs:build": "pnpm dev:prepare && nuxt build docs",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "release": "pnpm lint && pnpm test && pnpm typecheck && pnpm prepack && changelogen --release && pnpm publish && git push --follow-tags",
+    "release:major": "pnpm lint && pnpm test && pnpm typecheck && pnpm prepack && changelogen --release --major && pnpm publish && git push --follow-tags",
     "lint": "eslint . && eslint docs",
     "lint:fix": "eslint . --fix && eslint docs --fix",
     "e2e": "cd playground && pnpm e2e",
