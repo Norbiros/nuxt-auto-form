@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.1.0
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.0.2...v0.1.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Rename module to `@norbiros/nuxt-auto-form` ([e8ce116](https://github.com/Norbiros/nuxt-auto-form/commit/e8ce116))
+
+### 🩹 Fixes
+
+- Resolve a lot of issues from basic testing ([240e676](https://github.com/Norbiros/nuxt-auto-form/commit/240e676))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Rename module to `@norbiros/nuxt-auto-form` ([e8ce116](https://github.com/Norbiros/nuxt-auto-form/commit/e8ce116))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.0.2
 
 
