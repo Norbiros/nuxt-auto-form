@@ -1,7 +1,7 @@
 {
   "name": "nuxt-auto-form",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "packageManager": "pnpm@10.13.1",
   "description": "Auto-generate Nuxt UI forms from Zod 4 schemas",
   "author": {
