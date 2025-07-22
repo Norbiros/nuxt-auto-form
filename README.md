@@ -1,7 +1,6 @@
 # 🧾 Nuxt Auto Form
 
-[![pnpm version][pnpm-version-src]][pnpm-version-href]
-[![pnpm downloads][pnpm-downloads-src]][pnpm-downloads-href]
+[![npm version][npm-version-src]][npm-version-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
@@ -11,8 +10,8 @@ Auto-generate Nuxt UI forms from Zod 4 schemas
 > This module is in early development. Many features are missing and the API may change.
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
-- [📖 &nbsp;Documentation](https://nuxt-auto-form.norbiros.dev)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/nuxt-auto-form?file=playground%2Fapp.vue) -->
+- [📖 &nbsp;Documentation](https://@norbiros/nuxt-auto-form.norbiros.dev)
+<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/@norbiros/nuxt-auto-form?file=playground%2Fapp.vue) -->
 
 ## Features
 
@@ -27,7 +26,7 @@ Auto-generate Nuxt UI forms from Zod 4 schemas
 Install the module to your Nuxt application with one command:
 
 ```bash
-npx nuxi module add nuxt-auto-form
+npx nuxi module add @norbiros/@norbiros/nuxt-auto-form
 ```
 
 That's it! You can now use Nuxt Auto Form in your Nuxt app ✨
@@ -65,14 +64,11 @@ Made with 💚
 Published under the [MIT License](./LICENCE).
 
 <!-- Badges -->
-[pnpm-version-src]: https://img.shields.io/pnpm/v/nuxt-auto-form/latest.svg?style=flat&colorA=020420&colorB=00DC82
-[pnpm-version-href]: https://pnpmjs.com/package/nuxt-auto-form
+[npm-version-src]: https://img.shields.io/npm/v/@norbiros/nuxt-auto-form/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/@norbiros/nuxt-auto-form
 
-[pnpm-downloads-src]: https://img.shields.io/pnpm/dm/nuxt-auto-form.svg?style=flat&colorA=020420&colorB=00DC82
-[pnpm-downloads-href]: https://pnpm.chart.dev/nuxt-auto-form
+[license-src]: https://img.shields.io/npm/l/@norbiros/nuxt-auto-form.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://npmjs.com/package/@norbiros/nuxt-auto-form
 
-[license-src]: https://img.shields.io/pnpm/l/nuxt-auto-form.svg?style=flat&colorA=020420&colorB=00DC82
-[license-href]: https://pnpmjs.com/package/nuxt-auto-form
-
-[nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt.js
+[nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com

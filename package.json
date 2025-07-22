@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-auto-form",
+  "name": "@norbiros/nuxt-auto-form",
   "type": "module",
   "version": "0.0.2",
   "packageManager": "pnpm@10.13.1",
