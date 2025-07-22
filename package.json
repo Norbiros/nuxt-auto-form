@@ -42,8 +42,8 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "docs:dev": "pnpm dev:prepare && nuxt dev docs --uiDev",
     "docs:build": "pnpm dev:prepare && nuxt build docs",
-    "release": "pnpm lint && pnpm test && pnpm typecheck && pnpm prepack && changelogen --release && pnpm publish && git push --follow-tags",
-    "release:major": "pnpm lint && pnpm test && pnpm typecheck && pnpm prepack && changelogen --release --major && pnpm publish && git push --follow-tags",
+    "release": "pnpm lint && pnpm e2e && pnpm typecheck && pnpm prepack && changelogen --release && pnpm publish && git push --follow-tags",
+    "release:major": "pnpm lint && pnpm e2e && pnpm typecheck && pnpm prepack && changelogen --release --major && pnpm publish && git push --follow-tags",
     "lint": "eslint . && eslint docs",
     "lint:fix": "eslint . --fix && eslint docs --fix",
     "e2e": "cd playground && pnpm e2e",
@@ -58,6 +58,7 @@
     "@nuxt/ui": "^3.2.0",
     "defu": "^6.1.4",
     "scule": "^1.3.0",
+    "vue": "^3.5.17",
     "zod": "^4.0.5"
   },
   "devDependencies": {

@@ -1,13 +1,8 @@
-import type { ConcreteComponent } from '@vue/runtime-core'
 import { addComponent, addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { ensureDependencies } from './utils/packages'
 
 // Module options TypeScript interface definition
-export interface ModuleOptions {
-  ui: {
-    submitButtonComponent?: ConcreteComponent | string | undefined
-  }
-}
+export interface ModuleOptions {}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
