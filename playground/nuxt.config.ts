@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   modules: [
-    '../src/module',
+    '@norbiros/nuxt-auto-form',
     '@nuxt/ui',
     '@nuxt/test-utils/module',
   ],

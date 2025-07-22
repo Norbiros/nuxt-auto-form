@@ -111,7 +111,7 @@ function submit() {
 }
 
 const submitButtonComponent = computed(() => {
-  return useAppConfig().autoForm.submitButtonComponent?.toString()
+  return useAppConfig().autoForm?.submitButtonComponent
 })
 </script>
 

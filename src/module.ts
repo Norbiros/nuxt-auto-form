@@ -21,47 +21,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     addTypeTemplate({
       filename: 'types/nuxt-auto-form.d.ts',
-      getContents: () => `
-        declare module 'zod' {
-          interface GlobalMeta {
-            /** Configuration related to \`nuxt-auto-form\` Nuxt module */
-            autoForm?: {
-              /** Float input box to the right of the label */
-              floatRight?: boolean
-            }
-          }
-        }
-
-        export {}`,
+      src: resolver.resolve('index.d.ts'),
     })
 
     addComponent({
       name: 'AutoForm', // name of the component to be used in vue templates
       filePath: resolver.resolve('runtime/components/AutoForm.vue'),
     })
-    //
-    // addComponent({
-    //   name: 'SubmitButton', // name of the component to be used in vue templates
-    //   filePath: resolver.resolve('runtime/components/customization/SubmitButton.vue'),
-    // })
-
-    // nuxt.hook('components:dirs', (dirs) => {
-    //   console.log('DIRS')
-    //   dirs.push({
-    //     path: resolver.resolve('runtime/components'),
-    //     prefix: 'nuxt-auto-form',
-    //     pathPrefix: false,
-    //     priority: -10,
-    //   })7
-    // })
-
-    // // todo: if index.vue works in compnents use it
-    // addComponentsDir({
-    //   path: resolver.resolve('./runtime/components/customization/'),
-    //   global: true,
-    //   prefix: 'AutoForm',
-    //   // pathPrefix: false,
-    //   priority: -10,
-    // })
   },
 })
