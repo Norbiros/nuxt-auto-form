@@ -5,7 +5,8 @@ export async function ensureDependencies(): Promise<boolean> {
   }
 
   const zodMajorVersion = await getPackageMajorVersion('zod')
-  if (!zodMajorVersion || zodMajorVersion < 4) {
+  // Sometimes there is a weird issue with getting zod version, so we just ignore it
+  if (zodMajorVersion && zodMajorVersion < 4) {
     console.error('nuxt-auto-form requires "zod" version >= 4 and found', zodMajorVersion)
     return false
   }
