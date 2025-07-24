@@ -9,10 +9,9 @@ import UFormField from '@nuxt/ui/components/FormField.vue'
 import UInput from '@nuxt/ui/components/Input.vue'
 import UInputNumber from '@nuxt/ui/components/InputNumber.vue'
 import USelect from '@nuxt/ui/components/Select.vue'
+
 import defu from 'defu'
-
 import { splitByCase, upperFirst } from 'scule'
-
 import { computed, reactive, ref, toRaw, useTemplateRef } from 'vue'
 import * as z from 'zod'
 
@@ -38,11 +37,52 @@ const shape = (props.schema as z.ZodObject<any>).shape
 
 const isButtonEnabled = computed(() => props.schema.safeParse(state).success)
 
-type Output = InferOutput<T>
+interface ComponentDefinition {
+  // FIXME: Try using proper types for components
+  component: any
+  componentProps?: Record<string, any>
+}
 
-const fields = Object.entries(shape).map(([key, zodType]) =>
-  getComponentForZodType(key, zodType),
-)
+const COMPONENTS_MAP: Record<string, (key: string, zodType: any) => ComponentDefinition | null> = {
+  number: () => ({ component: UInputNumber }),
+  string: () => ({ component: UInput }),
+  boolean: () => ({ component: UCheckbox }),
+  enum: (_key, zodType) => ({
+    component: USelect,
+    componentProps: {
+      items: Object.values(zodType.def.entries),
+    },
+  }),
+  array: (key, zodType) => {
+    const sub_element = zodType.def.element
+    if (sub_element instanceof z.ZodEnum) {
+      const result = mapZodTypeToComponent(key, zodType.unwrap()) as any
+      result.componentProps.multiple = true
+      return result
+    }
+  },
+  default: (key, zodType) => {
+    (state as any)[key] = zodType.def.defaultValue
+    return mapZodTypeToComponent(key, zodType.unwrap())
+  },
+  email: () => ({ component: UInput, componentProps: { type: 'email' } }),
+}
+
+const fields = Object.entries(shape).map(([key, zodType]) => {
+  const result = mapZodTypeToComponent(key, zodType)
+  if (!result)
+    return null
+
+  return {
+    key,
+    formField: {
+      name: key,
+      ...parseMeta(zodType, key),
+    },
+    component: result.component,
+    props: result.componentProps ?? {},
+  }
+}).filter((field): field is NonNullable<typeof field> => field != null)
 
 function parseMeta(zodType: any, key: string) {
   const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
@@ -54,60 +94,17 @@ function parseMeta(zodType: any, key: string) {
   }
 }
 
-function getComponentForZodType(key: string, zodType: any) {
-  let component = UInput as any
-  let componentProps = {}
-
-  if (zodType instanceof z.ZodEmail) {
-    componentProps = { type: 'email' }
+function mapZodTypeToComponent(key: string, zodType: any): ComponentDefinition | null {
+  const zodTypeKey = zodType._def.format ?? zodType._def.type
+  const component = COMPONENTS_MAP[zodTypeKey]
+  if (!component) {
+    console.warn(`Unsupported Zod type: ${zodTypeKey}`)
+    return null
   }
-  else if (zodType instanceof z.ZodNumber) {
-    component = UInputNumber
-  }
-  else if (zodType instanceof z.ZodBoolean) {
-    component = UCheckbox
-  }
-  else if (zodType instanceof z.ZodEnum) {
-    component = USelect
-    componentProps = { items: [Object.values(zodType.def.entries)] }
-  }
-  else if (zodType instanceof z.ZodArray) {
-    const sub_element = zodType.def.element
-    if (sub_element instanceof z.ZodEnum) {
-      const result = getComponentForZodType(key, zodType.unwrap()) as any
-      result.props.multiple = true
-
-      result.formField = {
-        ...result.formField,
-        ...parseMeta(zodType, key),
-      }
-      return result
-    }
-  }
-  else if (zodType instanceof z.ZodDefault) {
-    (state as any)[key] = zodType.def.defaultValue
-    return getComponentForZodType(key, zodType.unwrap())
-  }
-  else if (zodType instanceof z.ZodString) {
-    component = UInput
-  }
-  else {
-    console.warn('Unknown zod type', zodType.constructor.name)
-  }
-
-  const meta = parseMeta(zodType, key)
-  return {
-    key,
-    formField: {
-      name: key,
-      ...meta,
-    },
-    component,
-    props: componentProps,
-  }
+  return component(key, zodType)
 }
 
-async function onSubmit(event: FormSubmitEvent<Output>) {
+async function onSubmit(event: FormSubmitEvent<InferOutput<T>>) {
   event.preventDefault()
   loading.value = true
   try {
@@ -141,7 +138,7 @@ const submitButtonComponent = computed(() => {
   >
     <UFormField
       v-for="field in fields"
-      :key="field.formField.key"
+      :key="field.key"
       :ui="{ description: 'text-left' }"
       v-bind="field.formField"
     >
