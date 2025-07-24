@@ -171,7 +171,6 @@ const submitButtonProps = computed(() => {
       <UButton
         v-else
         type="submit"
-        :variant="isButtonDisabled ? 'ghost' : 'solid'"
         label="Send"
         v-bind="submitButtonProps"
       />

@@ -10,7 +10,6 @@ defineProps<{
     color="neutral"
     :disabled
     class="w-full flex justify-center cursor-pointer"
-    :variant="disabled ? 'ghost' : 'solid'"
     label="My custom send button"
   />
 </template>

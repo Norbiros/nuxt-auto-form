@@ -5,18 +5,26 @@ import type { ConcreteComponent } from '@vue/runtime-core'
 
 export interface AutoFormConfig {
   /** Submit button configuration */
-  submit?:
-    | { component: ConcreteComponent | string, props?: Record<string, any> }
-    | { component?: undefined, props?: ButtonProps }
+  submit?: {
+    /** Name of the globally defined component to use as the submit button */
+    component: ConcreteComponent | string
+    /** Props to pass to the custom submit button */
+    props?: Record<string, any>
+  } | {
+    component?: undefined
+    /** Props to pass to the Nuxt UI `UButton` component */
+    props?: ButtonProps
+  }
 }
 
 declare module 'nuxt/schema' {
   interface AppConfigInput {
-    /** Theme configuration */
+    /** Configuration related to `nuxt-auto-form` Nuxt module */
     autoForm?: AutoFormConfig | undefined
   }
 
   interface AppConfig {
+    /** Configuration related to `nuxt-auto-form` Nuxt module */
     autoForm?: AutoFormConfig | undefined
   }
 }
