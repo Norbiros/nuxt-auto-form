@@ -136,6 +136,8 @@ const submitButtonComponent = computed(() => {
     class="space-y-4"
     @submit="onSubmit"
   >
+    <slot name="before-fields" />
+
     <UFormField
       v-for="field in fields"
       :key="field.key"
@@ -154,6 +156,8 @@ const submitButtonComponent = computed(() => {
         />
       </slot>
     </UFormField>
+
+    <slot name="after-fields" />
 
     <div class="space-y-2">
       <div v-if="submitButtonComponent">
