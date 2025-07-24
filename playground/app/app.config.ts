@@ -1,5 +1,10 @@
 export default defineAppConfig({
   autoForm: {
-    submitButtonComponent: 'SubmitButton',
+    submit: {
+      component: 'SubmitButton',
+      props: {
+        color: 'primary',
+      },
+    },
   },
 })

@@ -35,7 +35,7 @@ const formRef = useTemplateRef('form')
 const loading = ref(false)
 const shape = (props.schema as z.ZodObject<any>).shape
 
-const isButtonEnabled = computed(() => props.schema.safeParse(state).success)
+const isButtonDisabled = computed(() => !props.schema.safeParse(state).success)
 
 interface ComponentDefinition {
   // FIXME: Try using proper types for components
@@ -124,7 +124,14 @@ const appConfig = computed<AutoFormConfig>(() => {
 })
 
 const submitButtonComponent = computed(() => {
-  return appConfig.value?.submitButtonComponent
+  return appConfig.value?.submit?.component
+})
+
+const submitButtonProps = computed(() => {
+  return {
+    ...appConfig.value?.submit?.props,
+    disabled: isButtonDisabled.value,
+  }
 })
 </script>
 
@@ -132,10 +139,11 @@ const submitButtonComponent = computed(() => {
   <UForm
     ref="form"
     :schema="schema"
-    :state="state as any"
+    :state="(state as any)"
     class="space-y-4"
     @submit="onSubmit"
   >
+
     <slot name="before-fields" />
 
     <UFormField
@@ -159,17 +167,16 @@ const submitButtonComponent = computed(() => {
 
     <slot name="after-fields" />
 
-    <div class="space-y-2">
-      <div v-if="submitButtonComponent">
-        <component :is="toRaw(submitButtonComponent)" v-bind="{ isButtonEnabled }" />
-      </div>
+    <slot name="submit" :disabled="isButtonDisabled">
+      <template v-if="submitButtonComponent">
+        <component :is="toRaw(submitButtonComponent)" v-bind="submitButtonProps" />
+      </template>
       <UButton
         v-else
         type="submit"
-        :disabled="!isButtonEnabled"
-        :class="isButtonEnabled ? 'bg-primary' : ''"
         label="Send"
+        v-bind="submitButtonProps"
       />
-    </div>
+    </slot>
   </UForm>
 </template>
