@@ -144,7 +144,7 @@ const submitButtonComponent = computed(() => {
 
     <div class="space-y-2">
       <div v-if="submitButtonComponent">
-        <component :is="toRaw(submitButtonComponent)" v-bind="{ disabled: isButtonEnabled }" />
+        <component :is="toRaw(submitButtonComponent)" v-bind="{ isButtonEnabled }" />
       </div>
       <UButton
         v-else

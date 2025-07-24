@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps({
-  disabled: Boolean,
+  isButtonEnabled: Boolean,
 })
 </script>
 
@@ -8,9 +8,9 @@ defineProps({
   <UButton
     type="submit"
     color="neutral"
-    :disabled="!disabled"
+    :disabled="!isButtonEnabled"
     class="w-full flex justify-center cursor-pointer"
-    :class="disabled ? 'bg-primary' : ''"
+    :class="isButtonEnabled ? 'bg-primary' : ''"
     label="My custom send button"
   />
 </template>
