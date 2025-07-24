@@ -26,7 +26,7 @@ Auto-generate Nuxt UI forms from Zod 4 schemas
 Install the module to your Nuxt application with one command:
 
 ```bash
-npx nuxi module add @norbiros/@norbiros/nuxt-auto-form
+npx nuxi module add @norbiros/nuxt-auto-form
 ```
 
 That's it! You can now use Nuxt Auto Form in your Nuxt app ✨
