@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v0.2.0
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.1.0...v0.2.0)
+
+### 🚀 Enhancements
+
+- **docs:** Start writing Customization docs section ([e1ac732](https://github.com/Norbiros/nuxt-auto-form/commit/e1ac732))
+- **docs:** Start documenting specific components ([50d7eed](https://github.com/Norbiros/nuxt-auto-form/commit/50d7eed))
+- New `ui` prop on `AutoForm` ([2438442](https://github.com/Norbiros/nuxt-auto-form/commit/2438442))
+
+### 🩹 Fixes
+
+- Handle edge case for zod version retrieval ([7a489cf](https://github.com/Norbiros/nuxt-auto-form/commit/7a489cf))
+- ⚠️  Rename submit button property to `isButtonEnabled` ([2f209f9](https://github.com/Norbiros/nuxt-auto-form/commit/2f209f9))
+- Update selector in `basic.test.ts` ([5633538](https://github.com/Norbiros/nuxt-auto-form/commit/5633538))
+
+### 💅 Refactors
+
+- Reorganize types to `runtime/types/` ([c988e7b](https://github.com/Norbiros/nuxt-auto-form/commit/c988e7b))
+- Create `parseMeta` utility function ([aa91775](https://github.com/Norbiros/nuxt-auto-form/commit/aa91775))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Rename submit button property to `isButtonEnabled` ([2f209f9](https://github.com/Norbiros/nuxt-auto-form/commit/2f209f9))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.1.0
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.0.2...v0.1.0)
