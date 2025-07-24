@@ -10,6 +10,7 @@
     "url": "https://norbiros.dev"
   },
   "license": "MIT",
+  "homepage": "https://nuxt-auto-form.norbiros.dev/",
   "repository": "Norbiros/nuxt-auto-form",
   "keywords": [
     "nuxt",
