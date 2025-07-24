@@ -2,7 +2,7 @@
 
 import type { ConcreteComponent } from '@vue/runtime-core'
 
-interface AutoFormConfig {
+export interface AutoFormConfig {
   /** Primary app color */
   submitButtonComponent?: ConcreteComponent | string
 }

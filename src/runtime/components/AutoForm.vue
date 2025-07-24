@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
 import type { FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
+import type { AutoFormConfig } from '../types'
 import { useAppConfig } from '#app'
 import UButton from '@nuxt/ui/components/Button.vue'
 import UCheckbox from '@nuxt/ui/components/Checkbox.vue'
@@ -8,15 +9,17 @@ import UFormField from '@nuxt/ui/components/FormField.vue'
 import UInput from '@nuxt/ui/components/Input.vue'
 import UInputNumber from '@nuxt/ui/components/InputNumber.vue'
 import USelect from '@nuxt/ui/components/Select.vue'
+import defu from 'defu'
+
 import { splitByCase, upperFirst } from 'scule'
 
 import { computed, reactive, ref, toRaw, useTemplateRef } from 'vue'
-
 import * as z from 'zod'
 
 const props = withDefaults(defineProps<{
   schema: T
   initialState?: Partial<InferInput<T>>
+  ui?: AutoFormConfig
 }>(), {
   initialState: () => ({}),
 })
@@ -110,8 +113,12 @@ function submit() {
   formRef.value?.submit()
 }
 
+const appConfig = computed<AutoFormConfig>(() => {
+  return defu(props.ui, useAppConfig().autoForm)
+})
+
 const submitButtonComponent = computed(() => {
-  return useAppConfig().autoForm?.submitButtonComponent
+  return appConfig.value?.submitButtonComponent
 })
 </script>
 
