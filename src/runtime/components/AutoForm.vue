@@ -44,6 +44,16 @@ const fields = Object.entries(shape).map(([key, zodType]) =>
   getComponentForZodType(key, zodType),
 )
 
+function parseMeta(zodType: any, key: string) {
+  const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
+
+  return {
+    label: meta.title ?? upperFirst(splitByCase(key).join(' ').toLowerCase()),
+    description: meta.description,
+    class: meta.autoForm?.floatRight ? 'flex items-center justify-between text-left' : '',
+  }
+}
+
 function getComponentForZodType(key: string, zodType: any) {
   let component = UInput as any
   let componentProps = {}
@@ -67,9 +77,10 @@ function getComponentForZodType(key: string, zodType: any) {
       const result = getComponentForZodType(key, zodType.unwrap()) as any
       result.props.multiple = true
 
-      // todo: method for parsing meta
-      const meta = zodType.meta() || {}
-      result.formField.label = meta.title ?? key
+      result.formField = {
+        ...result.formField,
+        ...parseMeta(zodType, key),
+      }
       return result
     }
   }
@@ -84,14 +95,12 @@ function getComponentForZodType(key: string, zodType: any) {
     console.warn('Unknown zod type', zodType.constructor.name)
   }
 
-  const meta = zodType.meta() || {}
+  const meta = parseMeta(zodType, key)
   return {
     key,
     formField: {
       name: key,
-      label: meta.title ?? upperFirst(splitByCase(key).join(' ').toLowerCase()),
-      description: meta.description,
-      class: meta.autoForm?.floatRight ? 'flex items-center justify-between text-left' : '',
+      ...meta,
     },
     component,
     props: componentProps,
