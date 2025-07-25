@@ -1,6 +1,37 @@
 # Changelog
 
 
+## v0.3.0
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.2.0...v0.3.0)
+
+### 🚀 Enhancements
+
+- Add `homepage` field to package.json ([60c7c85](https://github.com/Norbiros/nuxt-auto-form/commit/60c7c85))
+- Add `after-fields` and `before-fields` slots ([78212c5](https://github.com/Norbiros/nuxt-auto-form/commit/78212c5))
+- Bind props to submit button, add submit slot ([#2](https://github.com/Norbiros/nuxt-auto-form/pull/2))
+
+### 🩹 Fixes
+
+- Use correct module name in README.md ([c97ed13](https://github.com/Norbiros/nuxt-auto-form/commit/c97ed13))
+
+### 💅 Refactors
+
+- Simplify component mapping logic in AutoForm ([41252ac](https://github.com/Norbiros/nuxt-auto-form/commit/41252ac))
+
+### 📖 Documentation
+
+- Add missing `submit` slot info in `AutoForm` docs ([05b9b30](https://github.com/Norbiros/nuxt-auto-form/commit/05b9b30))
+
+### 🏡 Chore
+
+- Improve default configuration in `.vscode` ([be3a921](https://github.com/Norbiros/nuxt-auto-form/commit/be3a921))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+- Daniele Nicosia ([@zAlweNy26](https://github.com/zAlweNy26))
+
 ## v0.2.0
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.1.0...v0.2.0)
