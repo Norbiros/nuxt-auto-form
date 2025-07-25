@@ -1,7 +1,8 @@
 name: 🚀 Enhancement
 description: Suggest a enhancement or improvement!
 title: '[Enhancement]: '
-type: enhancement
+labels:
+  - 'type: enhancement'
 body:
   - type: textarea
     id: howitworks

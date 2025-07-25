@@ -1,7 +1,8 @@
 name: ✨ Feature
 description: Suggest a feature or improvement!
 title: '[Feat]: '
-type: feature
+labels:
+  - 'type: feature'
 body:
   - type: textarea
     id: howitworks
@@ -11,3 +12,10 @@ body:
       placeholder: Add an option to...
     validations:
       required: true
+  - type: checkboxes
+    id: additional-info
+    attributes:
+      label: Additional information
+      description: Additional information that helps us decide how to proceed.
+      options:
+        - label: Would you be willing to help implement this feature?
