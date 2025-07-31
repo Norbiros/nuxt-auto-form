@@ -18,7 +18,7 @@ import * as z from 'zod'
 const props = withDefaults(defineProps<{
   schema: T
   initialState?: Partial<InferInput<T>>
-  ui?: AutoFormConfig
+  config?: AutoFormConfig
 }>(), {
   initialState: () => ({}),
 })
@@ -120,7 +120,7 @@ function submit() {
 }
 
 const appConfig = computed<AutoFormConfig>(() => {
-  return defu(props.ui, useAppConfig().autoForm)
+  return defu(props.config, useAppConfig().autoForm)
 })
 
 const submitButtonComponent = computed(() => {
@@ -143,7 +143,6 @@ const submitButtonProps = computed(() => {
     class="space-y-4"
     @submit="onSubmit"
   >
-
     <slot name="before-fields" />
 
     <UFormField
