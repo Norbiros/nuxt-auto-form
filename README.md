@@ -10,7 +10,7 @@ Auto-generate Nuxt UI forms from Zod 4 schemas
 > This module is in early development. Many features are missing and the API may change.
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
-- [📖 &nbsp;Documentation](https://@norbiros/nuxt-auto-form.norbiros.dev)
+- [📖 &nbsp;Documentation](https://nuxt-auto-form.norbiros.dev)
 - [👾 &nbsp;Playground](https://stackblitz.com/github/Norbiros/nuxt-auto-form/tree/master/playground?file=app%2Fcomponents%2FMyForm.vue)
 
 ## Features
