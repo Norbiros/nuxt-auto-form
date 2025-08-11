@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@norbiros/nuxt-auto-form': workspace:*
+
 importers:
 
   .:

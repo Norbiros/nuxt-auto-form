@@ -63,6 +63,11 @@ export default defineAppConfig({
         label: 'View on npmjs.com',
         to: 'https://www.npmjs.com/package/nuxt-auto-form',
         target: '_blank',
+      }, {
+        icon: 'i-lucide-puzzle',
+        label: 'Playground',
+        to: 'https://stackblitz.com/github/Norbiros/nuxt-auto-form/tree/master/playground?file=app%2Fcomponents%2FMyForm.vue',
+        target: '_blank',
       }],
     },
   },
