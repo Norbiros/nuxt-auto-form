@@ -9,6 +9,8 @@ test('test very basic form', async ({ page }) => {
   await page.getByRole('combobox', { name: 'Enum Input', exact: true }).click()
   await page.getByRole('option', { name: '2' }).click()
   await page.getByRole('textbox', { name: 'Text description' }).click()
+  await expect(page.getByText('with description')).toBeVisible()
+  await expect(page.getByText('with hint')).toBeVisible()
   await page.locator('form div').filter({ hasText: 'Input with custom slot' }).getByRole('combobox').click()
   await page.getByLabel('True').getByText('True').click()
   await expect(page.locator('#v-4-error')).toContainText('Invalid input')

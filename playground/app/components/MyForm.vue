@@ -13,12 +13,13 @@ const ENUM_MULTIPLE = [
 const schema = z.object({
   text: z.string()
     .nonempty()
-    .meta({ title: 'Text Input' }),
+    .meta({ title: 'Text Input', required: true }),
   enum: z.enum(['1', '2', '3'])
     .meta({ title: 'Enum Input' }),
   text_description: z.string()
     .meta({
       description: 'with description',
+      hint: 'with hint',
     }),
   custom_bool: z.boolean()
     .meta({ title: 'Input with custom slot' }),

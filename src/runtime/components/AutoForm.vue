@@ -89,7 +89,10 @@ function parseMeta(zodType: any, key: string) {
 
   return {
     label: meta.title ?? upperFirst(splitByCase(key).join(' ').toLowerCase()),
+    required: meta.required,
     description: meta.description,
+    hint: meta.hint,
+    help: meta.help,
     class: meta.autoForm?.floatRight ? 'flex items-center justify-between text-left' : '',
   }
 }
