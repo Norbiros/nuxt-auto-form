@@ -3,6 +3,8 @@
 import type { ButtonProps } from '@nuxt/ui'
 import type { ConcreteComponent } from '@vue/runtime-core'
 
+export type ComponentsMap = Record<string, (key: string, zodType: any) => ComponentDefinition | null>
+
 export interface AutoFormConfig {
   /** Submit button configuration */
   submit?: {
@@ -15,6 +17,17 @@ export interface AutoFormConfig {
     /** Props to pass to the Nuxt UI `UButton` component */
     props?: ButtonProps
   }
+  /**
+   * Customize the default components used for rendering form fields.
+   *
+   * @example
+   * ```ts
+   * components: {
+   *   email: () => ({ component: UInput, componentProps: { type: 'email' } }),
+   * }
+   * ```
+   */
+  components?: ComponentsMap
 }
 
 declare module 'nuxt/schema' {

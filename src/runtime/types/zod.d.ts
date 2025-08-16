@@ -23,7 +23,7 @@ declare module 'zod' {
       component?: string | Component
       /**
        * Props forwarded to the input component at render time.
-       * These are merged with the module's default props - user props take precedence..
+       * These are merged with the module's default props - user props take precedence.
        */
       props?: Record<string, any>
     }

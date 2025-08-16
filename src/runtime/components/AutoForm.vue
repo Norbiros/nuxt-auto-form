@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
 import type { FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
-import type { AutoFormConfig } from '../types'
+import type { AutoFormConfig, ComponentsMap } from '../types'
 import { useAppConfig } from '#app'
 import UButton from '@nuxt/ui/components/Button.vue'
 import UCheckbox from '@nuxt/ui/components/Checkbox.vue'
@@ -43,7 +43,7 @@ interface ComponentDefinition {
   componentProps?: Record<string, any>
 }
 
-const COMPONENTS_MAP: Record<string, (key: string, zodType: any) => ComponentDefinition | null> = {
+const COMPONENTS_MAP: ComponentsMap = {
   number: () => ({ component: UInputNumber }),
   string: () => ({ component: UInput }),
   boolean: () => ({ component: UCheckbox }),
@@ -99,7 +99,7 @@ function parseMeta(meta: any, key: string) {
 
 function mapZodTypeToComponent(key: string, zodType: any): ComponentDefinition | null {
   const zodTypeKey = zodType._def.format ?? zodType._def.type
-  const component = COMPONENTS_MAP[zodTypeKey]
+  const component = defu(useAppConfig().autoForm?.components, COMPONENTS_MAP)[zodTypeKey]
   if (!component) {
     console.warn(`Unsupported Zod type: ${zodTypeKey}`)
     return null
