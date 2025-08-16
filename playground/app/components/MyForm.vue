@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as z from 'zod'
+import InputWithClear from '~/components/InputWithClear.vue'
 
 const ENUM_MULTIPLE = [
   'A',
@@ -13,13 +14,26 @@ const ENUM_MULTIPLE = [
 const schema = z.object({
   text: z.string()
     .nonempty()
-    .meta({ title: 'Text Input', required: true }),
+    .meta({
+      title: 'Text Input',
+      required: true,
+      input: {
+        props: {
+          placeholder: 'Placeholder',
+        },
+      },
+    }),
   enum: z.enum(['1', '2', '3'])
-    .meta({ title: 'Enum Input' }),
+    .meta({
+      title: 'Enum Input',
+    }),
   text_description: z.string()
     .meta({
       description: 'with description',
       hint: 'with hint',
+      input: {
+        component: InputWithClear,
+      },
     }),
   custom_bool: z.boolean()
     .meta({ title: 'Input with custom slot' }),

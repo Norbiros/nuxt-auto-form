@@ -68,25 +68,25 @@ const COMPONENTS_MAP: Record<string, (key: string, zodType: any) => ComponentDef
   email: () => ({ component: UInput, componentProps: { type: 'email' } }),
 }
 
-const fields = Object.entries(shape).map(([key, zodType]) => {
+const fields = Object.entries(shape).map(([key, zodType]: [string, any]) => {
   const result = mapZodTypeToComponent(key, zodType)
   if (!result)
     return null
+
+  const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
 
   return {
     key,
     formField: {
       name: key,
-      ...parseMeta(zodType, key),
+      ...parseMeta(meta, key),
     },
-    component: result.component,
-    props: result.componentProps ?? {},
+    component: meta?.input?.component ?? result.component,
+    props: defu(meta?.input?.props, result.componentProps ?? {}),
   }
 }).filter((field): field is NonNullable<typeof field> => field != null)
 
-function parseMeta(zodType: any, key: string) {
-  const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
-
+function parseMeta(meta: any, key: string) {
   return {
     label: meta.title ?? upperFirst(splitByCase(key).join(' ').toLowerCase()),
     required: meta.required,
