@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
+    '@norbiros/nuxt-auto-form',
     '@nuxt/eslint',
     '@nuxt/image',
     '@nuxt/ui-pro',
@@ -11,6 +12,12 @@ export default defineNuxtConfig({
 
   devtools: {
     enabled: true,
+  },
+
+  mdc: {
+    highlight: {
+      langs: ['ts'], // add 'ts' here
+    },
   },
 
   css: ['~/assets/css/main.css'],

@@ -68,6 +68,14 @@ const COMPONENTS_MAP: ComponentsMap = {
   email: () => ({ component: UInput, componentProps: { type: 'email' } }),
 }
 
+const defaults: Partial<AutoFormConfig> = {
+  components: COMPONENTS_MAP,
+}
+
+const appConfig = computed<AutoFormConfig>(() => {
+  return defu(props.config, useAppConfig().autoForm, defaults)
+})
+
 const fields = Object.entries(shape).map(([key, zodType]: [string, any]) => {
   const result = mapZodTypeToComponent(key, zodType)
   if (!result)
@@ -99,7 +107,7 @@ function parseMeta(meta: any, key: string) {
 
 function mapZodTypeToComponent(key: string, zodType: any): ComponentDefinition | null {
   const zodTypeKey = zodType._def.format ?? zodType._def.type
-  const component = defu(useAppConfig().autoForm?.components, COMPONENTS_MAP)[zodTypeKey]
+  const component = appConfig.value.components?.[zodTypeKey]
   if (!component) {
     console.warn(`Unsupported Zod type: ${zodTypeKey}`)
     return null
@@ -121,10 +129,6 @@ async function onSubmit(event: FormSubmitEvent<InferOutput<T>>) {
 function submit() {
   formRef.value?.submit()
 }
-
-const appConfig = computed<AutoFormConfig>(() => {
-  return defu(props.config, useAppConfig().autoForm)
-})
 
 const submitButtonComponent = computed(() => {
   return appConfig.value?.submit?.component

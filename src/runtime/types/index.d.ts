@@ -32,12 +32,12 @@ export interface AutoFormConfig {
 
 declare module 'nuxt/schema' {
   interface AppConfigInput {
-    /** Configuration related to `nuxt-auto-form` Nuxt module */
+    /** Configuration related to `@norbiros/nuxt-auto-form` Nuxt module */
     autoForm?: AutoFormConfig | undefined
   }
 
   interface AppConfig {
-    /** Configuration related to `nuxt-auto-form` Nuxt module */
+    /** Configuration related to `@norbiros/nuxt-auto-form` Nuxt module */
     autoForm?: AutoFormConfig | undefined
   }
 }
