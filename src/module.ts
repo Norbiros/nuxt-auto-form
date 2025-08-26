@@ -12,7 +12,7 @@ export default defineNuxtModule<ModuleOptions>({
   // Default configuration options of the Nuxt module
   defaults: {},
   async setup(options, nuxt) {
-    nuxt.options.runtimeConfig.public.autoForm = options
+    nuxt.options.runtimeConfig.public.autoForm = options as any
     if (!await ensureDependencies()) {
       return
     }

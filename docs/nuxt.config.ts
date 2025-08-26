@@ -14,9 +14,9 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  mdc: {
-    highlight: {
-      langs: ['ts'], // add 'ts' here
+  experimental: {
+    componentIslands: {
+      selectiveClient: true,
     },
   },
 

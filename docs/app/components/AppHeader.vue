@@ -40,9 +40,12 @@ const { header } = useAppConfig()
     >
       <NuxtLink
         :to="header?.to || '/'"
-        class="font-bold text-xl"
+        class="font-bold text-xl inline-flex items-center gap-2"
       >
         Nuxt Auto Form
+        <UBadge variant="subtle" color="warning" size="sm">
+          WIP
+        </UBadge>
       </NuxtLink>
     </template>
 
