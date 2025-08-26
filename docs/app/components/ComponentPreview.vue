@@ -20,8 +20,8 @@ highlightedCode.value = await codeToHtml(sourceCode!, { lang: 'vue', theme: 'mat
 
 <template>
   <div class="flex flex-col md:flex-row p-4 rounded-lg shadow-lg">
-    <ProseCode class="leading-3 p-5">
-      <code class="[&>pre]:bg-transparent!" v-html="highlightedCode" />
+    <ProseCode class="p-5">
+      <div class="[&>pre]:bg-transparent! [&_.line]:inline-block!" v-html="highlightedCode" />
     </ProseCode>
     <div class="flex-1 p-4 bg-muted">
       <component :is="componentModule?.default" />
