@@ -42,6 +42,7 @@ const { header } = useAppConfig()
         :to="header?.to || '/'"
         class="font-bold text-xl inline-flex items-center gap-2"
       >
+        <img src="~/assets/logo.svg" alt="N" class="w-8 mb-2">
         Nuxt Auto Form
         <UBadge variant="subtle" color="warning" size="sm">
           WIP
