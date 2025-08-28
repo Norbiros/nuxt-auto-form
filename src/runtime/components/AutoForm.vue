@@ -54,8 +54,8 @@ const COMPONENTS_MAP: ComponentsMap = {
     },
   }),
   array: (key, zodType) => {
-    const sub_element = zodType.def.element
-    if (sub_element instanceof z.ZodEnum) {
+    const innerType = zodType.def.element
+    if (innerType instanceof z.ZodEnum) {
       const result = mapZodTypeToComponent(key, zodType.unwrap()) as any
       result.componentProps.multiple = true
       return result
@@ -65,7 +65,15 @@ const COMPONENTS_MAP: ComponentsMap = {
     (state as any)[key] = zodType.def.defaultValue
     return mapZodTypeToComponent(key, zodType.unwrap())
   },
-  email: () => ({ component: UInput, componentProps: { type: 'email' } }),
+  email: (key, _) => {
+    const stringComponent = mapZodTypeToComponent(key, 'string')!
+
+    return defu({
+      componentProps: {
+        type: 'email',
+      },
+    }, stringComponent)
+  },
 }
 
 const defaults: Partial<AutoFormConfig> = {
