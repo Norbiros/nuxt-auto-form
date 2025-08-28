@@ -3,7 +3,7 @@
 import type { ButtonProps } from '@nuxt/ui'
 import type { ConcreteComponent } from '@vue/runtime-core'
 
-export type ComponentsMap = Record<string, (key: string, zodType: any) => ComponentDefinition | null>
+export type ComponentsMap = Record<string, (params: { key: string, state: any, zodType: any, config: AutoFormConfig }) => ComponentDefinition | null>
 
 export interface AutoFormConfig {
   /** Submit button configuration */
@@ -17,6 +17,16 @@ export interface AutoFormConfig {
     /** Props to pass to the Nuxt UI `UButton` component */
     props?: ButtonProps
   }
+
+  theme: {
+    /**
+     * Use floating labels for form fields
+     * @see https://ui.nuxt.com/components/form-field#description
+     * @default true
+     */
+    floatingLabels?: boolean
+  }
+
   /**
    * Customize the default components used for rendering form fields.
    *

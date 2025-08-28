@@ -1,19 +1,16 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
 import type { FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
-import type { AutoFormConfig, ComponentsMap } from '../types'
+import type * as z from 'zod'
+import type { AutoFormConfig } from '../types'
 import { useAppConfig } from '#app'
 import UButton from '@nuxt/ui/components/Button.vue'
-import UCheckbox from '@nuxt/ui/components/Checkbox.vue'
 import UForm from '@nuxt/ui/components/Form.vue'
 import UFormField from '@nuxt/ui/components/FormField.vue'
-import UInput from '@nuxt/ui/components/Input.vue'
-import UInputNumber from '@nuxt/ui/components/InputNumber.vue'
-import USelect from '@nuxt/ui/components/Select.vue'
 
 import defu from 'defu'
 import { splitByCase, upperFirst } from 'scule'
 import { computed, reactive, ref, toRaw, useTemplateRef } from 'vue'
-import * as z from 'zod'
+import { COMPONENTS_MAP, mapZodTypeToComponent } from '../../utils/components_map'
 
 const props = withDefaults(defineProps<{
   schema: T
@@ -37,45 +34,6 @@ const shape = (props.schema as z.ZodObject<any>).shape
 
 const isButtonDisabled = computed(() => !props.schema.safeParse(state).success)
 
-interface ComponentDefinition {
-  // FIXME: Try using proper types for components
-  component: any
-  componentProps?: Record<string, any>
-}
-
-const COMPONENTS_MAP: ComponentsMap = {
-  number: () => ({ component: UInputNumber }),
-  string: () => ({ component: UInput }),
-  boolean: () => ({ component: UCheckbox }),
-  enum: (_key, zodType) => ({
-    component: USelect,
-    componentProps: {
-      items: Object.values(zodType.def.entries),
-    },
-  }),
-  array: (key, zodType) => {
-    const innerType = zodType.def.element
-    if (innerType instanceof z.ZodEnum) {
-      const result = mapZodTypeToComponent(key, zodType.unwrap()) as any
-      result.componentProps.multiple = true
-      return result
-    }
-  },
-  default: (key, zodType) => {
-    (state as any)[key] = zodType.def.defaultValue
-    return mapZodTypeToComponent(key, zodType.unwrap())
-  },
-  email: (key, _) => {
-    const stringComponent = mapZodTypeToComponent(key, 'string')!
-
-    return defu({
-      componentProps: {
-        type: 'email',
-      },
-    }, stringComponent)
-  },
-}
-
 const defaults: Partial<AutoFormConfig> = {
   components: COMPONENTS_MAP,
 }
@@ -85,7 +43,7 @@ const appConfig = computed<AutoFormConfig>(() => {
 })
 
 const fields = Object.entries(shape).map(([key, zodType]: [string, any]) => {
-  const result = mapZodTypeToComponent(key, zodType)
+  const result = mapZodTypeToComponent(key, zodType, appConfig.value, state)
   if (!result)
     return null
 
@@ -111,16 +69,6 @@ function parseMeta(meta: any, key: string) {
     help: meta.help,
     class: meta.autoForm?.floatRight ? 'flex items-center justify-between text-left' : '',
   }
-}
-
-function mapZodTypeToComponent(key: string, zodType: any): ComponentDefinition | null {
-  const zodTypeKey = zodType._def.format ?? zodType._def.type
-  const component = appConfig.value.components?.[zodTypeKey]
-  if (!component) {
-    console.warn(`Unsupported Zod type: ${zodTypeKey}`)
-    return null
-  }
-  return component(key, zodType)
 }
 
 async function onSubmit(event: FormSubmitEvent<InferOutput<T>>) {
