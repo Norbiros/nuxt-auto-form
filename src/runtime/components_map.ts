@@ -1,9 +1,8 @@
-import type { AutoFormConfig, ComponentsMap } from '../runtime/types'
+import type { AutoFormConfig, ComponentsMap } from './types'
 import UCheckbox from '@nuxt/ui/components/Checkbox.vue'
 import UInput from '@nuxt/ui/components/Input.vue'
 import UInputNumber from '@nuxt/ui/components/InputNumber.vue'
 import USelect from '@nuxt/ui/components/Select.vue'
-import defu from 'defu'
 import * as z from 'zod'
 
 export interface ComponentDefinition {
@@ -34,15 +33,10 @@ export const COMPONENTS_MAP: ComponentsMap = {
     (state as any)[key] = zodType.def.defaultValue
     return mapZodTypeToComponent(key, zodType.unwrap(), config, state)
   },
-  email: ({ key, config, state }) => {
-    const stringComponent = mapZodTypeToComponent(key, 'string', config, state)!
-
-    return defu({
-      componentProps: {
-        type: 'email',
-      },
-    }, stringComponent)
-  },
+  email: () => ({
+    component: UInput,
+    componentProps: { type: 'text' },
+  }),
 }
 
 export function mapZodTypeToComponent(key: string, zodType: any, config: AutoFormConfig, state: any): ComponentDefinition | null {

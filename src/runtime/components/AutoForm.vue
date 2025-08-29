@@ -10,7 +10,7 @@ import UFormField from '@nuxt/ui/components/FormField.vue'
 import defu from 'defu'
 import { splitByCase, upperFirst } from 'scule'
 import { computed, reactive, ref, toRaw, useTemplateRef } from 'vue'
-import { COMPONENTS_MAP, mapZodTypeToComponent } from '../../utils/components_map'
+import { COMPONENTS_MAP, mapZodTypeToComponent } from '../components_map'
 
 const props = withDefaults(defineProps<{
   schema: T

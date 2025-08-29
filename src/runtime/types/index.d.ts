@@ -18,7 +18,7 @@ export interface AutoFormConfig {
     props?: ButtonProps
   }
 
-  theme: {
+  theme?: {
     /**
      * Use floating labels for form fields
      * @see https://ui.nuxt.com/components/form-field#description

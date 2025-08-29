@@ -23,6 +23,8 @@ const schema = z.object({
         },
       },
     }),
+  email: z.email()
+    .nonempty(),
   enum: z.enum(['1', '2', '3'])
     .meta({
       title: 'Enum Input',
