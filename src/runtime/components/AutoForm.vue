@@ -24,6 +24,8 @@ const emit = defineEmits<{
   (e: 'submit', data: InferOutput<T>): void
 }>()
 
+const slots = useSlots()
+
 const state = reactive({ ...props.initialState })
 
 defineExpose({ submit })
@@ -53,12 +55,19 @@ const fields = Object.entries(shape).map(([key, zodType]: [string, any]) => {
     key,
     formField: {
       name: key,
+      slots: findSlots(key),
       ...parseMeta(meta, key),
     },
     component: meta?.input?.component ?? result.component,
     props: defu(meta?.input?.props, result.componentProps ?? {}),
   }
 }).filter((field): field is NonNullable<typeof field> => field != null)
+
+function findSlots(key: string): string[] {
+  return Object.keys(slots)
+    .filter(name => name.startsWith(`${key}-`))
+    .map(name => name.slice(key.length + 1))
+}
 
 function parseMeta(meta: any, key: string) {
   return {
@@ -114,6 +123,10 @@ const submitButtonProps = computed(() => {
       :ui="{ description: 'text-left' }"
       v-bind="field.formField"
     >
+      <template v-for="slot in field.formField.slots" #[slot]>
+        <slot :name="`${field.key}-${slot}`" />
+      </template>
+
       <slot
         :name="field.key"
         :field="field.key"

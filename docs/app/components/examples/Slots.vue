@@ -23,5 +23,13 @@ const schema = z.object({
         ]"
       />
     </template>
+
+    <template #boolean-description>
+      <span class="text-green-500">Green description!</span>
+    </template>
+
+    <template #boolean-hint>
+      <span class="text-purple-500">Purple hint</span>
+    </template>
   </AutoForm>
 </template>

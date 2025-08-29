@@ -63,6 +63,11 @@ function onSubmit(data: Record<string, any>) {
     :schema="schema"
     @submit="onSubmit"
   >
+    <template #text-hint>
+      <NuxtLink to="https://norbiros.dev">
+        Who?
+      </NuxtLink>
+    </template>
     <template #custom_bool="{ field, state }">
       <USelect
         v-model="state[field]"
