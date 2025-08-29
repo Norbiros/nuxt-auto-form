@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AInputPasswordToggle, AInputWithClear } from '#components'
+import { AInputWithClear } from '#components'
 import * as z from 'zod'
 
 const ENUM_MULTIPLE = [
@@ -48,7 +48,6 @@ const schema = z.object({
   multiple_input: z
     .array(z.enum(ENUM_MULTIPLE))
     .meta({ title: 'Multiple Enum Input' }),
-  password: z.string().nonempty().meta({ input: { component: AInputPasswordToggle } }),
 })
 
 function onSubmit(data: Record<string, any>) {

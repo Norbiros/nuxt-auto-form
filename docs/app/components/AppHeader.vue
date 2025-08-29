@@ -45,7 +45,7 @@ const { header } = useAppConfig()
         <img src="~/assets/logo.svg" alt="N" class="w-8 mb-2">
         Nuxt Auto Form
         <UBadge variant="subtle" color="warning" size="sm">
-          WIP
+          Beta
         </UBadge>
       </NuxtLink>
     </template>
