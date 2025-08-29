@@ -1,4 +1,4 @@
-import { addComponent, addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addComponent, addComponentsDir, addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { ensureDependencies } from './utils/packages'
 
 // Module options TypeScript interface definition
@@ -29,8 +29,13 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     addComponent({
-      name: 'AutoForm', // name of the component to be used in vue templates
+      name: 'AutoForm',
       filePath: resolver.resolve('runtime/components/AutoForm.vue'),
+    })
+    addComponentsDir({
+      path: resolver.resolve('runtime/components/input/'),
+      prefix: 'AInput',
+      pathPrefix: false,
     })
   },
 })

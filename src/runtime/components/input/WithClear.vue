@@ -1,11 +1,13 @@
 <script setup lang="ts">
-const modelValue = defineModel<string>({ default: 'Click to clear' })
+import UButton from '@nuxt/ui/components/Button.vue'
+import UInput from '@nuxt/ui/components/Input.vue'
+
+const modelValue = defineModel<string>({ default: '' })
 </script>
 
 <template>
   <UInput
     v-model="modelValue"
-    placeholder="Type something..."
     :ui="{ trailing: 'pe-1' }"
   >
     <template v-if="modelValue?.length" #trailing>

@@ -123,7 +123,9 @@ const submitButtonProps = computed(() => {
           :is="field.component"
           v-bind="field.props"
           v-model="(state as Record<string, any>)[field.key]"
-        />
+        >
+          <slot :name="`${field.key}-content`" />
+        </component>
       </slot>
     </UFormField>
 
