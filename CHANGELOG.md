@@ -1,6 +1,48 @@
 # Changelog
 
 
+## v0.4.0
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.3.0...v0.4.0)
+
+### 🚀 Enhancements
+
+- Create online playground on stackblitz ([#7](https://github.com/Norbiros/nuxt-auto-form/pull/7))
+- Add multiple `UFormField` configuration options ([a6e55a5](https://github.com/Norbiros/nuxt-auto-form/commit/a6e55a5))
+- Allow customizing input component & props ([1289ef0](https://github.com/Norbiros/nuxt-auto-form/commit/1289ef0))
+- Add an option to customize default components for fields ([158b802](https://github.com/Norbiros/nuxt-auto-form/commit/158b802))
+- Docs revisit ([a3f57b1](https://github.com/Norbiros/nuxt-auto-form/commit/a3f57b1))
+- Add custom logo ([081b1ef](https://github.com/Norbiros/nuxt-auto-form/commit/081b1ef))
+- Enhance email field handling in AutoForm component ([93a8de4](https://github.com/Norbiros/nuxt-auto-form/commit/93a8de4))
+- Add `AInput` components ([#6](https://github.com/Norbiros/nuxt-auto-form/pull/6))
+- Update status to beta in `AppHeader` and `README.md` ([fb33ff6](https://github.com/Norbiros/nuxt-auto-form/commit/fb33ff6))
+
+### 🩹 Fixes
+
+- **github:** Use proper issue templates ([8550158](https://github.com/Norbiros/nuxt-auto-form/commit/8550158))
+- **docs:** Resolve issues with line height in `ComponentPreview` ([9b41993](https://github.com/Norbiros/nuxt-auto-form/commit/9b41993))
+
+### 💅 Refactors
+
+- ⚠️  Rename `ui` prop to `config` in AutoForm component ([700f706](https://github.com/Norbiros/nuxt-auto-form/commit/700f706))
+- Move `COMPONENTS_MAP` to a separate file ([20f77e3](https://github.com/Norbiros/nuxt-auto-form/commit/20f77e3))
+- ⚠️  Move configuration to `app.config.ts` ([#8](https://github.com/Norbiros/nuxt-auto-form/pull/8))
+
+### 📖 Documentation
+
+- Fix documentation url in `README` ([e77fd89](https://github.com/Norbiros/nuxt-auto-form/commit/e77fd89))
+- Add more info in installation docs ([4c19c6b](https://github.com/Norbiros/nuxt-auto-form/commit/4c19c6b))
+- Completely rewrite docs to mention the new features ([d41399f](https://github.com/Norbiros/nuxt-auto-form/commit/d41399f))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Rename `ui` prop to `config` in AutoForm component ([700f706](https://github.com/Norbiros/nuxt-auto-form/commit/700f706))
+- ⚠️  Move configuration to `app.config.ts` ([#8](https://github.com/Norbiros/nuxt-auto-form/pull/8))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.3.0
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.2.0...v0.3.0)
