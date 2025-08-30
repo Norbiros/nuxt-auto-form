@@ -9,7 +9,7 @@ import UFormField from '@nuxt/ui/components/FormField.vue'
 
 import defu from 'defu'
 import { splitByCase, upperFirst } from 'scule'
-import { computed, reactive, ref, toRaw, useTemplateRef } from 'vue'
+import { computed, reactive, ref, toRaw, useSlots, useTemplateRef } from 'vue'
 import { COMPONENTS_MAP, mapZodTypeToComponent } from '../components_map'
 
 const props = withDefaults(defineProps<{
@@ -25,7 +25,6 @@ const emit = defineEmits<{
 }>()
 
 const slots = useSlots()
-
 const state = reactive({ ...props.initialState })
 
 defineExpose({ submit })
