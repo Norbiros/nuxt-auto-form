@@ -46,27 +46,30 @@ const appConfig = computed<AutoFormConfig>(() => {
   return defu(props.config, useAppConfig().autoForm, defaults)
 })
 
-const fields = Object.entries(shape).map(([key, zodType]: [string, any]) => {
-  const result = mapZodTypeToComponent(key, zodType, appConfig.value, state)
-  if (!result)
-    return null
+const fields = computed(() => {
+  return Object.entries(shape).map(([key, zodType]: [string, any]) => {
+    const result = mapZodTypeToComponent(key, zodType, appConfig.value, state)
+    if (!result)
+      return null
 
-  const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
+    const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
 
-  const defaultProps = {
-    class: appConfig.value?.theme?.wFull ? 'w-full' : '',
-  }
-  return {
-    key,
-    formField: {
-      name: key,
-      slots: findSlots(key),
-      ...parseMeta(meta, key),
-    },
-    component: meta?.input?.component ?? result.component,
-    props: defu(defaultProps, meta?.input?.props, result.componentProps ?? {}),
-  }
-}).filter((field): field is NonNullable<typeof field> => field != null)
+    const defaultProps = {
+      class: appConfig.value?.theme?.wFull ? 'w-full' : '',
+    }
+
+    return {
+      key,
+      formField: {
+        name: key,
+        slots: findSlots(key),
+        ...parseMeta(meta, key),
+      },
+      component: meta?.input?.component ?? result.component,
+      props: defu(defaultProps, meta?.input?.props, result.componentProps ?? {}),
+    }
+  }).filter((field): field is NonNullable<typeof field> => field != null)
+})
 
 function findSlots(key: string): string[] {
   return Object.keys(slots)
@@ -102,7 +105,7 @@ function submit() {
 
 const submitButton = computed(() => {
   if (appConfig.value?.submit !== false)
-    return appConfig.value.submit
+    return appConfig.value?.submit
   return undefined
 })
 
@@ -152,7 +155,7 @@ const submitButtonProps = computed(() => {
     <slot name="after-fields" />
 
     <slot name="submit" :disabled="isButtonDisabled">
-      <div v-if="submitButton">
+      <div v-if="appConfig?.submit !== false">
         <template v-if="submitButton?.component">
           <component :is="toRaw(submitButton?.component)" v-bind="submitButtonProps" />
         </template>
