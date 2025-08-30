@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.3
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.4.2...v0.4.3)
+
+### 🚀 Enhancements
+
+- Create `theme` property and document it ([f892ea3](https://github.com/Norbiros/nuxt-auto-form/commit/f892ea3))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.4.2
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.4.1...v0.4.2)
