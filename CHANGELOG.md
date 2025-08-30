@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.4.1
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.4.0...v0.4.1)
+
+### 🚀 Enhancements
+
+- Support dynamic form field slots ([40b0fb8](https://github.com/Norbiros/nuxt-auto-form/commit/40b0fb8))
+
+### 📖 Documentation
+
+- Improved form & migration documentation ([b303b64](https://github.com/Norbiros/nuxt-auto-form/commit/b303b64))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.4.0
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.3.0...v0.4.0)
