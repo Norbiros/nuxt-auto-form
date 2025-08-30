@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.4.2
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.4.1...v0.4.2)
+
+### 🚀 Enhancements
+
+- Add support for disabling submit button ([3efc959](https://github.com/Norbiros/nuxt-auto-form/commit/3efc959))
+- Add QR code modal example ([6a19b13](https://github.com/Norbiros/nuxt-auto-form/commit/6a19b13))
+
+### 🩹 Fixes
+
+- Add missing import for `useSlots` composable ([1244b80](https://github.com/Norbiros/nuxt-auto-form/commit/1244b80))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.4.1
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.4.0...v0.4.1)
