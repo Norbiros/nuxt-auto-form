@@ -23,5 +23,8 @@ const schema = z.object({
 </script>
 
 <template>
-  <AutoForm :schema="schema" />
+  <AutoForm
+    :schema="schema"
+    :config="{ submit: { props: { label: 'Send!!!' } } }"
+  />
 </template>

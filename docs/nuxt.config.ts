@@ -28,6 +28,9 @@ export default defineNuxtConfig({
         toc: {
           searchDepth: 1,
         },
+        highlight: {
+          langs: ['diff'],
+        },
       },
     },
   },
