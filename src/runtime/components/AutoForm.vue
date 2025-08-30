@@ -94,13 +94,15 @@ function submit() {
   formRef.value?.submit()
 }
 
-const submitButtonComponent = computed(() => {
-  return appConfig.value?.submit?.component
+const submitButton = computed(() => {
+  if (appConfig.value?.submit !== false)
+    return appConfig.value.submit
+  return undefined
 })
 
 const submitButtonProps = computed(() => {
   return {
-    ...appConfig.value?.submit?.props,
+    ...submitButton.value?.props,
     disabled: isButtonDisabled.value,
   }
 })
@@ -144,15 +146,17 @@ const submitButtonProps = computed(() => {
     <slot name="after-fields" />
 
     <slot name="submit" :disabled="isButtonDisabled">
-      <template v-if="submitButtonComponent">
-        <component :is="toRaw(submitButtonComponent)" v-bind="submitButtonProps" />
-      </template>
-      <UButton
-        v-else
-        type="submit"
-        label="Send"
-        v-bind="submitButtonProps"
-      />
+      <div v-if="submitButton">
+        <template v-if="submitButton?.component">
+          <component :is="toRaw(submitButton?.component)" v-bind="submitButtonProps" />
+        </template>
+        <UButton
+          v-else
+          type="submit"
+          label="Send"
+          v-bind="submitButtonProps"
+        />
+      </div>
     </slot>
   </UForm>
 </template>

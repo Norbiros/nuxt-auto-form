@@ -28,6 +28,7 @@ export const COMPONENTS_MAP: ComponentsMap = {
       result.componentProps.multiple = true
       return result
     }
+    return {}
   },
   default: ({ key, zodType, state, config }) => {
     (state as any)[key] = zodType.def.defaultValue

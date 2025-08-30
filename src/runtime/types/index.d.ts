@@ -16,7 +16,7 @@ export interface AutoFormConfig {
     component?: undefined
     /** Props to pass to the Nuxt UI `UButton` component */
     props?: ButtonProps
-  }
+  } | false
 
   theme?: {
     /**
