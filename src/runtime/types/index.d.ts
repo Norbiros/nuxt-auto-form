@@ -18,13 +18,15 @@ export interface AutoFormConfig {
     props?: ButtonProps
   } | false
 
+  /**
+   * Customize default form styles
+   */
   theme?: {
     /**
-     * Use floating labels for form fields
-     * @see https://ui.nuxt.com/components/form-field#description
+     * Apply `w-full` class to all input components by default.
      * @default true
      */
-    floatingLabels?: boolean
+    wFull?: boolean
   }
 
   /**

@@ -37,6 +37,9 @@ const isButtonDisabled = computed(() => !props.schema.safeParse(state).success)
 
 const defaults: Partial<AutoFormConfig> = {
   components: COMPONENTS_MAP,
+  theme: {
+    wFull: true,
+  },
 }
 
 const appConfig = computed<AutoFormConfig>(() => {
@@ -50,6 +53,9 @@ const fields = Object.entries(shape).map(([key, zodType]: [string, any]) => {
 
   const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
 
+  const defaultProps = {
+    class: appConfig.value?.theme?.wFull ? 'w-full' : '',
+  }
   return {
     key,
     formField: {
@@ -58,7 +64,7 @@ const fields = Object.entries(shape).map(([key, zodType]: [string, any]) => {
       ...parseMeta(meta, key),
     },
     component: meta?.input?.component ?? result.component,
-    props: defu(meta?.input?.props, result.componentProps ?? {}),
+    props: defu(defaultProps, meta?.input?.props, result.componentProps ?? {}),
   }
 }).filter((field): field is NonNullable<typeof field> => field != null)
 
@@ -75,7 +81,7 @@ function parseMeta(meta: any, key: string) {
     description: meta.description,
     hint: meta.hint,
     help: meta.help,
-    class: meta.autoForm?.floatRight ? 'flex items-center justify-between text-left' : '',
+    class: meta.theme?.floatRight ? 'flex items-center justify-between text-left' : '',
   }
 }
 

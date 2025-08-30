@@ -35,7 +35,7 @@ const schema = z.object({
   marketing_consent: z.boolean()
     .meta({
       title: 'Do you want to receive information about future Hack4Krak events?',
-      autoForm: { floatRight: true },
+      theme: { floatRight: true },
     }),
   referral_source: z
     .array(z.enum(REFERRAL_SOURCES))

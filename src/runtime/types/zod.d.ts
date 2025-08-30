@@ -6,9 +6,14 @@ declare module 'zod' {
   /** Global configuration added by `nuxt-auto-form` Nuxt module */
   interface GlobalMeta {
     /** Auto-form specific configuration */
-    autoForm?: {
+    theme?: {
       /** Float the input box to the right of the label */
       floatRight?: boolean
+      /**
+       * Apply `w-full` class to all input components by default.
+       * @default true
+       */
+      wFull?: boolean
     }
 
     /**

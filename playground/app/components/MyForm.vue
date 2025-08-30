@@ -43,7 +43,7 @@ const schema = z.object({
     .default(true)
     .meta({
       title: 'Boolean Input with floatRight',
-      autoForm: { floatRight: true },
+      theme: { floatRight: true },
     }),
   multiple_input: z
     .array(z.enum(ENUM_MULTIPLE))

@@ -17,7 +17,7 @@ const schema = z.object({
     },
   } }),
   style: z.boolean()
-    .meta({ autoForm: { floatRight: true } }),
+    .meta({ theme: { floatRight: true } }),
 })
 </script>
 
