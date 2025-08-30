@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.5.0
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.4.3...v0.5.0)
+
+### 🩹 Fixes
+
+- Resolve some issues related to submit button ([67f9769](https://github.com/Norbiros/nuxt-auto-form/commit/67f9769))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.4.3
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.4.2...v0.4.3)
