@@ -111,8 +111,8 @@ const submitButton = computed(() => {
 
 const submitButtonProps = computed(() => {
   return {
+    ariaDisabled: true,
     ...submitButton.value?.props,
-    disabled: isButtonDisabled.value,
   }
 })
 </script>
