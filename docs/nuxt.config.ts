@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     '@norbiros/nuxt-auto-form',
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxt/ui-pro',
+    '@nuxt/ui',
     '@nuxt/content',
     'nuxt-og-image',
     'nuxt-llms',
@@ -33,9 +33,10 @@ export default defineNuxtConfig({
         },
       },
     },
+    experimental: { nativeSqlite: true },
   },
 
-  compatibilityDate: '2024-07-11',
+  compatibilityDate: '2026-02-21',
 
   nitro: {
     prerender: {
