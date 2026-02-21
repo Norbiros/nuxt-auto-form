@@ -6,6 +6,12 @@ test('test very basic form', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'My custom send button' })).toHaveAttribute('aria-disabled', 'true')
   await page.getByRole('textbox', { name: 'Text Input' }).click()
   await page.getByRole('textbox', { name: 'Text Input' }).fill('asdasd')
+
+  // Test optional number field - type, delete, verify it stays undefined
+  await page.getByRole('spinbutton', { name: 'Optional Number Input' }).click()
+  await page.getByRole('spinbutton', { name: 'Optional Number Input' }).fill('123')
+  await page.getByRole('spinbutton', { name: 'Optional Number Input' }).clear()
+
   await page.getByRole('textbox', { name: 'Email' }).click()
   await page.getByRole('textbox', { name: 'Email' }).fill('me@norbiros.dev')
   await expect(page.locator('.iconify').first()).toBeVisible()
@@ -16,7 +22,7 @@ test('test very basic form', async ({ page }) => {
   await expect(page.getByText('with hint')).toBeVisible()
   await page.locator('form div').filter({ hasText: 'Input with custom slot' }).getByRole('combobox').click()
   await page.getByLabel('True').getByText('True').click()
-  await expect(page.locator('#v-5-error')).toContainText('Invalid input')
+  await expect(page.locator('#v-6-error')).toContainText('Invalid input')
   await page.getByRole('textbox', { name: 'Text description' }).click()
   await page.getByRole('textbox', { name: 'Text description' }).fill('asdasd')
   await page.getByRole('combobox', { name: 'Multiple Enum Input' }).click()

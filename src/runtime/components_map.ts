@@ -34,6 +34,14 @@ export const COMPONENTS_MAP: ComponentsMap = {
     (state as any)[key] = zodType.def.defaultValue
     return mapZodTypeToComponent(key, zodType.unwrap(), config, state)
   },
+  optional: ({ key, zodType, config, state }) => {
+    const result = mapZodTypeToComponent(key, zodType.unwrap(), config, state)
+    if (result) {
+      result.componentProps ??= {}
+      result.componentProps.modelModifiers = { ...result.componentProps.modelModifiers, optional: true }
+    }
+    return result
+  },
   email: () => ({
     component: UInput,
     componentProps: { type: 'text' },

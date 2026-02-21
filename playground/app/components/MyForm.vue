@@ -23,6 +23,11 @@ const schema = z.object({
         },
       },
     }),
+  optional_number: z.number()
+    .optional()
+    .meta({
+      title: 'Optional Number Input',
+    }),
   email: z.email()
     .nonempty(),
   enum: z.enum(['1', '2', '3'])
