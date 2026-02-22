@@ -5,7 +5,13 @@ const { footer } = useAppConfig()
 <template>
   <UFooter>
     <template #left>
-      {{ footer.credits }}
+      <div class="text-sm">
+        Made with 💚 by
+        <ULink href="https://github.com/Norbiros/nuxt-auto-form" class="text-primary-500 font-bold" target="_blank">
+          Norbiros
+        </Ulink>
+        {{ footer.credits }}
+      </div>
     </template>
 
     <template #right>

@@ -28,7 +28,13 @@ provide('navigation', navigation)
   <UApp>
     <AppHeader />
 
-    <UError :error="error" />
+    <UError :error="error" class="min-h-[75vh]" />
+
+    <div class="text-center py-8 text-neutral-500 text-sm">
+      <p class="opacity-60 hover:opacity-100 transition-opacity cursor-default">
+        PSST... try clicking the traffic lights on top of component preview: 🔴 🟡 🟢 🔴 🟡 🟢
+      </p>
+    </div>
 
     <AppFooter />
 

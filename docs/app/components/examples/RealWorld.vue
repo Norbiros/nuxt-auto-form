@@ -46,7 +46,7 @@ const schema = z.object({
 // Normally you could use `.default()` in the schema, but sometimes you need
 // to fill the initial state from an external source, like an API call.
 const state = {
-  age: 10,
+  age: '10',
 }
 
 async function onSubmit(_data: z.infer<typeof schema>) {

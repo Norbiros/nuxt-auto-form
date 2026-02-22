@@ -1,10 +1,58 @@
 <script setup lang="ts">
 import { codeToHtml } from 'shiki'
-import { ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 
 const props = defineProps<{ name: string }>()
 
+const selectedTab = ref('preview')
 const highlightedCode = ref('')
+const easterEggActive = ref(false)
+const clickSequence = ref<string[]>([])
+let resetTimer: ReturnType<typeof setTimeout> | null = null
+
+const secretSequence = ['red', 'yellow', 'green', 'red', 'yellow', 'green']
+
+function handleButtonClick(color: string) {
+  if (resetTimer)
+    clearTimeout(resetTimer)
+
+  clickSequence.value.push(color)
+
+  if (clickSequence.value.length > secretSequence.length) {
+    clickSequence.value.shift()
+  }
+
+  const currentIndex = clickSequence.value.length - 1
+  if (clickSequence.value[currentIndex] !== secretSequence[currentIndex]) {
+    // eslint-disable-next-line no-console
+    console.log(`Oh you broke it! Expected ${secretSequence[currentIndex]} but got ${color}. Starting over...`)
+    clickSequence.value = [color]
+  }
+  else {
+    // eslint-disable-next-line no-console
+    console.log(`Warmer.. Warmer.. Warmer... (${clickSequence.value.join(' → ')})`)
+  }
+
+  if (JSON.stringify(clickSequence.value) === JSON.stringify(secretSequence)) {
+    // eslint-disable-next-line no-console
+    console.log('🎉 EASTER EGG ACTIVATED!')
+    easterEggActive.value = true
+    clickSequence.value = []
+    setTimeout(() => {
+      easterEggActive.value = false
+    }, 3000)
+    return
+  }
+
+  resetTimer = setTimeout(() => {
+    clickSequence.value = []
+  }, 2000)
+}
+
+onUnmounted(() => {
+  if (resetTimer)
+    clearTimeout(resetTimer)
+})
 
 const modules = import.meta.glob('../components/examples/*.vue', { eager: true })
 const componentModule = modules[`./examples/${props.name}.vue`] as any
@@ -16,15 +64,92 @@ const rawModules = import.meta.glob('../components/examples/*.vue', {
 const sourceCode = rawModules[`./examples/${props.name}.vue`]
 
 highlightedCode.value = await codeToHtml(sourceCode!, { lang: 'vue', theme: 'material-theme-palenight' })
+
+const tabs = [
+  { key: 'preview', label: 'Preview', icon: 'i-lucide-eye' },
+  { key: 'code', label: 'Code', icon: 'i-lucide-code' },
+]
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row p-4 rounded-lg shadow-lg">
-    <ProseCode class="w-3/5 overflow-auto">
-      <div class="[&>pre]:bg-transparent! [&_.line]:inline-block!" v-html="highlightedCode" />
-    </ProseCode>
-    <div class="flex-1 p-4 bg-muted">
-      <component :is="componentModule?.default" />
+  <div
+    class="rounded-xl overflow-hidden bg-neutral-950/50 backdrop-blur transition-all duration-300"
+    :class="easterEggActive ? 'rainbow-border animate-wiggle' : 'border border-default'"
+  >
+    <div class="border-b border-default bg-neutral-900/50">
+      <div class="flex items-center justify-between px-4 py-3">
+        <div class="flex gap-1.5">
+          <button
+            class="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors cursor-pointer"
+            @mousedown="handleButtonClick('red')"
+          />
+          <button
+            class="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors cursor-pointer"
+            @mousedown="handleButtonClick('yellow')"
+          />
+          <button
+            class="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors cursor-pointer"
+            @mousedown="handleButtonClick('green')"
+          />
+        </div>
+
+        <div class="flex gap-1 bg-neutral-800/50 rounded-lg p-1">
+          <button
+            v-for="tab in tabs"
+            :key="tab.key"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
+            :class="selectedTab === tab.key
+              ? 'bg-neutral-700 text-white'
+              : 'text-neutral-400 hover:text-white hover:bg-neutral-700/50'"
+            @click="selectedTab = tab.key"
+          >
+            <UIcon :name="tab.icon" class="w-4 h-4" />
+            {{ tab.label }}
+          </button>
+        </div>
+
+        <div class="w-[52px]" />
+      </div>
     </div>
+
+    <Transition name="fade" mode="out-in">
+      <div v-if="selectedTab === 'preview'" key="preview" class="p-8 min-h-[300px] flex items-center justify-center bg-gradient-to-br from-neutral-900/30 to-neutral-950/30">
+        <div class="w-full max-w-md">
+          <component :is="componentModule?.default" />
+        </div>
+      </div>
+
+      <div v-else key="code" class="overflow-auto max-h-[500px] bg-neutral-950/50">
+        <CodeBlock :code="highlightedCode" />
+      </div>
+    </Transition>
   </div>
 </template>
+
+<style scoped>
+.rainbow-border {
+  border: 2px solid;
+  animation: rainbow 0.5s linear infinite;
+  box-shadow: 0 0 20px rgba(255, 100, 100, 0.5);
+}
+
+@keyframes rainbow {
+  0% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
+  14% { border-color: #ff7f00; box-shadow: 0 0 20px #ff7f00; }
+  28% { border-color: #ffff00; box-shadow: 0 0 20px #ffff00; }
+  42% { border-color: #00ff00; box-shadow: 0 0 20px #00ff00; }
+  57% { border-color: #0000ff; box-shadow: 0 0 20px #0000ff; }
+  71% { border-color: #4b0082; box-shadow: 0 0 20px #4b0082; }
+  85% { border-color: #8f00ff; box-shadow: 0 0 20px #8f0082; }
+  100% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.3s ease-in-out infinite, rainbow 0.5s linear infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+</style>

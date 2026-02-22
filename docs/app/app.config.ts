@@ -34,7 +34,7 @@ export default defineAppConfig({
     }],
   },
   footer: {
-    credits: `Copyright © ${new Date().getFullYear()}`,
+    credits: `© ${new Date().getFullYear()}`,
     colorMode: false,
     links: [{
       'icon': 'i-simple-icons-npm',

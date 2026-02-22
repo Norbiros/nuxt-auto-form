@@ -1,10 +1,11 @@
 <template>
-  <UPageHero orientation="horizontal" :ui="{ container: 'lg:py-30' }">
+  <UPageHero orientation="horizontal" :ui="{ container: 'lg:py-30', description: 'text-lg' }">
     <template #title>
       Nuxt Auto Form
     </template>
     <template #description>
       Build forms faster with tools you already know and love.
+      <br>
       Generate fully customizable Nuxt UI forms straight from your Zod schemas.
     </template>
     <template #links>
@@ -16,6 +17,6 @@
       </UButton>
     </template>
 
-    <ComponentPreview name="LandingSimple" class="leading-0" />
+    <ComponentPreview name="LandingHero" />
   </UPageHero>
 </template>
