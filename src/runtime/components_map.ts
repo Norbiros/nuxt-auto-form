@@ -34,14 +34,8 @@ export const COMPONENTS_MAP: ComponentsMap = {
     (state as any)[key] = zodType.def.defaultValue
     return mapZodTypeToComponent(key, zodType.unwrap(), config, state)
   },
-  optional: ({ key, zodType, config, state }) => {
-    const result = mapZodTypeToComponent(key, zodType.unwrap(), config, state)
-    if (result) {
-      result.componentProps ??= {}
-      result.componentProps.modelModifiers = { ...result.componentProps.modelModifiers, optional: true }
-    }
-    return result
-  },
+  optional: ({ key, zodType, config, state }) => mapModifier(key, zodType, config, state, 'optional'),
+  nullable: ({ key, zodType, config, state }) => mapModifier(key, zodType, config, state, 'nullable'),
   email: () => ({
     component: UInput,
     componentProps: { type: 'text' },
@@ -58,4 +52,22 @@ export function mapZodTypeToComponent(key: string, zodType: any, config: AutoFor
     return null
   }
   return component({ key, zodType, config, state })
+}
+
+function mapModifier(
+  key: string,
+  zodType: any,
+  config: AutoFormConfig,
+  state: any,
+  modifierKey: string,
+): ComponentDefinition | null {
+  const result = mapZodTypeToComponent(key, zodType.unwrap(), config, state)
+  if (result) {
+    result.componentProps ??= {}
+    result.componentProps.modelModifiers = {
+      ...result.componentProps.modelModifiers,
+      [modifierKey]: true,
+    }
+  }
+  return result
 }
