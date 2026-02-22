@@ -32,6 +32,10 @@ export default defineNuxtModule<ModuleOptions>({
       name: 'AutoForm',
       filePath: resolver.resolve('runtime/components/AutoForm.vue'),
     })
+    addComponent({
+      name: 'AutoFormPrimitive',
+      filePath: resolver.resolve('runtime/components/AutoFormPrimitive.vue'),
+    })
     addComponentsDir({
       path: resolver.resolve('runtime/components/input/'),
       prefix: 'AInput',

@@ -1,39 +1,36 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
-import type { FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
+import type { FormError, FormErrorEvent, FormSubmitEvent, InferOutput } from '@nuxt/ui'
 import type * as z from 'zod'
 import type { AutoFormConfig } from '../types'
 import { useAppConfig } from '#app'
-import UButton from '@nuxt/ui/components/Button.vue'
 import UForm from '@nuxt/ui/components/Form.vue'
 import UFormField from '@nuxt/ui/components/FormField.vue'
-
 import defu from 'defu'
 import { splitByCase, upperFirst } from 'scule'
-import { computed, reactive, ref, useSlots, useTemplateRef } from 'vue'
+import { computed, useSlots, useTemplateRef } from 'vue'
 import { COMPONENTS_MAP, mapZodTypeToComponent } from '../components_map'
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   schema: T
-  initialState?: Partial<InferInput<T>>
+  state: Record<string, any>
   config?: AutoFormConfig
-}>(), {
-  initialState: () => ({}),
-})
+  id?: string | number
+  validate?: (state: Partial<InferOutput<T>>) => FormError[] | Promise<FormError[]>
+  validateOn?: ('input' | 'change' | 'blur')[]
+  disabled?: boolean
+  validateOnInputDelay?: number
+  transform?: boolean
+  loadingAuto?: boolean
+}>()
 
-const emit = defineEmits<{
-  (e: 'submit', data: InferOutput<T>): void
+const emits = defineEmits<{
+  submit: [payload: FormSubmitEvent<InferOutput<T>>]
+  error: [payload: FormErrorEvent]
 }>()
 
 const slots = useSlots()
-const state = reactive({ ...props.initialState })
-
-defineExpose({ submit })
-
 const formRef = useTemplateRef('form')
-const loading = ref(false)
 const shape = (props.schema as z.ZodObject<any>).shape
-
-const isButtonDisabled = computed(() => !props.schema.safeParse(state).success)
 
 const defaults: Partial<AutoFormConfig> = {
   components: COMPONENTS_MAP,
@@ -48,7 +45,7 @@ const appConfig = computed<AutoFormConfig>(() => {
 
 const fields = computed(() => {
   return Object.entries(shape).map(([key, zodType]: [string, any]) => {
-    const result = mapZodTypeToComponent(key, zodType, appConfig.value, state)
+    const result = mapZodTypeToComponent(key, zodType, appConfig.value, props.state)
     if (!result)
       return null
 
@@ -89,46 +86,53 @@ function parseMeta(meta: any, key: string) {
 }
 
 function updateFieldValue(key: string, value: any) {
-  // Intentionally mutate reactive state
-  ;(state as Record<string, any>)[key] = value
+  // Intentionally mutate reactive state prop
+  ;(props.state as Record<string, any>)[key] = value
 }
 
-async function onSubmit(event: FormSubmitEvent<InferOutput<T>>) {
-  event.preventDefault()
-  loading.value = true
-  try {
-    emit('submit', event.data)
-  }
-  finally {
-    loading.value = false
-  }
-}
+const formProps = computed(() => ({
+  schema: props.schema,
+  state: props.state,
+  id: props.id,
+  validate: props.validate,
+  validateOn: props.validateOn,
+  disabled: props.disabled,
+  validateOnInputDelay: props.validateOnInputDelay,
+  transform: props.transform,
+  loadingAuto: props.loadingAuto,
+}))
 
-function submit() {
-  formRef.value?.submit()
-}
-
-const submitButton = computed(() => {
-  if (appConfig.value?.submit !== false)
-    return appConfig.value?.submit
-  return undefined
-})
-
-const submitButtonProps = computed(() => {
-  return {
-    'aria-disabled': isButtonDisabled.value,
-    ...submitButton.value?.props,
-  }
+defineExpose({
+  form: formRef,
+  submit: () => formRef.value?.submit(),
+  validate: (opts?: any) => formRef.value?.validate(opts),
+  clear: (path?: string | RegExp) => formRef.value?.clear(path as any),
+  getErrors: (path?: string | RegExp) => formRef.value?.getErrors(path as any),
+  setErrors: (errors: FormError[], name?: string | RegExp) => formRef.value?.setErrors(errors, name as any),
+  errors: computed(() => formRef.value?.errors),
+  disabled: computed(() => formRef.value?.disabled),
+  dirty: computed(() => formRef.value?.dirty),
+  dirtyFields: computed(() => formRef.value?.dirtyFields),
+  touchedFields: computed(() => formRef.value?.touchedFields),
+  blurredFields: computed(() => formRef.value?.blurredFields),
 })
 </script>
 
 <template>
   <UForm
+    :id="formProps.id"
     ref="form"
-    :schema="schema"
-    :state="(state as any)"
+    :schema="formProps.schema"
+    :state="(formProps.state as any)"
+    :validate="formProps.validate as any"
+    :validate-on="formProps.validateOn"
+    :disabled="formProps.disabled"
+    :validate-on-input-delay="formProps.validateOnInputDelay"
+    :transform="formProps.transform"
+    :loading-auto="formProps.loadingAuto"
     class="space-y-4"
-    @submit="onSubmit"
+    @submit="emits('submit', $event)"
+    @error="emits('error', $event)"
   >
     <slot name="before-fields" />
 
@@ -145,12 +149,12 @@ const submitButtonProps = computed(() => {
       <slot
         :name="field.key"
         :field="field.key"
-        :state="(state as Record<string, any>)"
+        :state="props.state"
       >
         <component
           :is="field.component"
           v-bind="field.props"
-          :model-value="(state as Record<string, any>)[field.key]"
+          :model-value="(props.state as Record<string, any>)[field.key]"
           @update:model-value="(value: any) => updateFieldValue(field.key, value)"
         >
           <slot :name="`${field.key}-content`" />
@@ -160,18 +164,6 @@ const submitButtonProps = computed(() => {
 
     <slot name="after-fields" />
 
-    <slot name="submit" :disabled="isButtonDisabled">
-      <div v-if="appConfig?.submit !== false">
-        <template v-if="submitButton?.component">
-          <component :is="submitButton?.component" v-bind="submitButtonProps" />
-        </template>
-        <UButton
-          v-else
-          type="submit"
-          label="Send"
-          v-bind="submitButtonProps"
-        />
-      </div>
-    </slot>
+    <slot name="submit" />
   </UForm>
 </template>
