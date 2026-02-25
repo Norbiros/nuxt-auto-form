@@ -1,14 +1,25 @@
 <script setup lang="ts">
 import { codeToHtml } from 'shiki'
-import { onUnmounted, ref } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 
 const props = defineProps<{ name: string }>()
 
-const selectedTab = ref('preview')
+const colorMode = useColorMode()
+const selectedTab = ref('0')
 const highlightedCode = ref('')
 const easterEggActive = ref(false)
 const clickSequence = ref<string[]>([])
 let resetTimer: ReturnType<typeof setTimeout> | null = null
+
+const isDark = computed(() => colorMode.value === 'dark')
+
+async function updateHighlightedCode() {
+  const modules = import.meta.glob('../components/examples/*.vue', { eager: true, as: 'raw' })
+  const sourceCode = modules[`./examples/${props.name}.vue`] as string
+  highlightedCode.value = await codeToHtml(sourceCode, { lang: 'vue', theme: isDark.value ? 'material-theme-palenight' : 'github-light' })
+}
+
+watch(isDark, updateHighlightedCode)
 
 const secretSequence = ['red', 'yellow', 'green', 'red', 'yellow', 'green']
 
@@ -57,26 +68,20 @@ onUnmounted(() => {
 const modules = import.meta.glob('../components/examples/*.vue', { eager: true })
 const componentModule = modules[`./examples/${props.name}.vue`] as any
 
-const rawModules = import.meta.glob('../components/examples/*.vue', {
-  eager: true,
-  as: 'raw',
-})
-const sourceCode = rawModules[`./examples/${props.name}.vue`]
-
-highlightedCode.value = await codeToHtml(sourceCode!, { lang: 'vue', theme: 'material-theme-palenight' })
+updateHighlightedCode()
 
 const tabs = [
-  { key: 'preview', label: 'Preview', icon: 'i-lucide-eye' },
-  { key: 'code', label: 'Code', icon: 'i-lucide-code' },
+  { label: 'Preview', icon: 'i-lucide-eye', key: 'preview' },
+  { label: 'Code', icon: 'i-lucide-code', key: 'code' },
 ]
 </script>
 
 <template>
   <div
-    class="rounded-xl overflow-hidden bg-neutral-950/50 backdrop-blur transition-all duration-300"
+    class="rounded-xl overflow-hidden bg-elevated backdrop-blur transition-all duration-300"
     :class="easterEggActive ? 'rainbow-border animate-wiggle' : 'border border-default'"
   >
-    <div class="border-b border-default bg-neutral-900/50">
+    <div class="border-b border-default bg-muted">
       <div class="flex items-center justify-between px-4 py-3">
         <div class="flex gap-1.5">
           <button
@@ -93,33 +98,26 @@ const tabs = [
           />
         </div>
 
-        <div class="flex gap-1 bg-neutral-800/50 rounded-lg p-1">
-          <button
-            v-for="tab in tabs"
-            :key="tab.key"
-            class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
-            :class="selectedTab === tab.key
-              ? 'bg-neutral-700 text-white'
-              : 'text-neutral-400 hover:text-white hover:bg-neutral-700/50'"
-            @click="selectedTab = tab.key"
-          >
-            <UIcon :name="tab.icon" class="w-4 h-4" />
-            {{ tab.label }}
-          </button>
-        </div>
+        <UTabs
+          v-model="selectedTab"
+          variant="pill"
+          :items="tabs"
+          :content="false"
+          class="gap-1"
+        />
 
         <div class="w-[52px]" />
       </div>
     </div>
 
     <Transition name="fade" mode="out-in">
-      <div v-if="selectedTab === 'preview'" key="preview" class="p-8 min-h-[300px] flex items-center justify-center bg-gradient-to-br from-neutral-900/30 to-neutral-950/30">
+      <div v-if="selectedTab === '0'" key="preview" class="p-8 min-h-[300px] flex items-center justify-center" :class="isDark ? 'bg-gradient-to-br from-muted/30 to-elevated/30' : ''">
         <div class="w-full max-w-md">
           <component :is="componentModule?.default" />
         </div>
       </div>
 
-      <div v-else key="code" class="overflow-auto max-h-[500px] bg-neutral-950/50">
+      <div v-else key="code" class="overflow-auto max-h-[500px] bg-elevated">
         <CodeBlock :code="highlightedCode" />
       </div>
     </Transition>

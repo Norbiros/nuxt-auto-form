@@ -3,6 +3,13 @@
 
 @source "../../../content/**/*";
 
+.dark {
+  --ui-bg-muted: #0c1326;
+  --ui-bg-elevated: #091023;
+  --ui-bg-accented: #52525b;
+  --ui-bg-inverted: #ffffff;
+}
+
 @theme static {
   --font-sans: 'Public Sans', sans-serif;
 

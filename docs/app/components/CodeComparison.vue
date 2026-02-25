@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { codeToHtml } from 'shiki'
+import { computed, ref, watch } from 'vue'
+
+const colorMode = useColorMode()
+const isDark = computed(() => colorMode.value === 'dark')
 
 const withAutoForm = `<script setup lang="ts">
 import * as z from 'zod'
@@ -43,11 +47,11 @@ function onSubmit(data: Schema) {
     <UFormGroup label="Email" name="email">
       <UInput v-model="state.email" type="email" />
     </UFormGroup>
-    
+
     <UFormGroup label="Password" name="password">
       <UInput v-model="state.password" type="password" />
     </UFormGroup>
-    
+
     <UButton type="submit">Submit</UButton>
   </UForm>
 </template>`
@@ -55,15 +59,17 @@ function onSubmit(data: Schema) {
 const highlightedWith = ref('')
 const highlightedWithout = ref('')
 
-highlightedWith.value = await codeToHtml(withAutoForm, {
-  lang: 'vue',
-  theme: 'material-theme-palenight',
-})
+function highlightCode(code: string) {
+  return codeToHtml(code, { lang: 'vue', theme: isDark.value ? 'material-theme-palenight' : 'github-light' })
+}
 
-highlightedWithout.value = await codeToHtml(withoutAutoForm, {
-  lang: 'vue',
-  theme: 'material-theme-palenight',
-})
+async function updateHighlightedCode() {
+  highlightedWith.value = await highlightCode(withAutoForm)
+  highlightedWithout.value = await highlightCode(withoutAutoForm)
+}
+
+watch(isDark, updateHighlightedCode)
+updateHighlightedCode()
 </script>
 
 <template>

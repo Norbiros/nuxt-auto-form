@@ -6,8 +6,8 @@ defineProps<{
 </script>
 
 <template>
-  <div class="border border-default rounded-xl overflow-hidden bg-neutral-950/50">
-    <div v-if="showDots" class="border-b border-default bg-neutral-900/50 px-4 py-3">
+  <div class="border border-default rounded-xl overflow-hidden bg-elevated">
+    <div v-if="showDots" class="border-b border-default bg-muted px-4 py-3">
       <div class="flex gap-1.5">
         <div class="w-3 h-3 rounded-full bg-red-500/80" />
         <div class="w-3 h-3 rounded-full bg-yellow-500/80" />
