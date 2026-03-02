@@ -18,31 +18,21 @@ const { header } = useAppConfig()
     />
 
     <template
-      v-if="header?.logo?.dark || header?.logo?.light || header?.title"
       #title
-    >
-      <UColorModeImage
-        v-if="header?.logo?.dark || header?.logo?.light"
-        :light="header?.logo?.light!"
-        :dark="header?.logo?.dark!"
-        :alt="header?.logo?.alt"
-        class="h-6 w-auto shrink-0"
-      />
-
-      <span v-else-if="header?.title">
-        {{ header.title }}
-      </span>
-    </template>
-
-    <template
-      v-else
-      #left
     >
       <NuxtLink
         :to="header?.to || '/'"
         class="font-bold text-xl inline-flex items-center gap-2"
       >
-        <img src="~/assets/logo.svg" alt="N" class="h-10">
+        <UColorModeImage
+          v-if="header?.logo?.dark || header?.logo?.light"
+          :light="header?.logo?.light!"
+          :dark="header?.logo?.dark!"
+          :alt="header?.logo?.alt"
+          class="h-10 w-auto shrink-0"
+        />
+        <img v-else src="/logo_dark.svg" alt="N" class="h-10 w-auto shrink-0">
+
         <span class="hidden md:inline">
           Nuxt Auto Form
         </span>

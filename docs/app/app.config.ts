@@ -20,9 +20,9 @@ export default defineAppConfig({
     title: '',
     to: '/',
     logo: {
-      alt: '',
-      light: '',
-      dark: '',
+      alt: 'N',
+      light: '/logo_light.svg',
+      dark: '/logo_dark.svg',
     },
     search: true,
     colorMode: true,
