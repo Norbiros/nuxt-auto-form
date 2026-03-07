@@ -4,13 +4,9 @@ import type * as z from 'zod'
 import type { AutoFormConfig } from '../types'
 import { useAppConfig } from '#app'
 import UButton from '@nuxt/ui/components/Button.vue'
-import UForm from '@nuxt/ui/components/Form.vue'
-import UFormField from '@nuxt/ui/components/FormField.vue'
-
 import defu from 'defu'
-import { splitByCase, upperFirst } from 'scule'
-import { computed, reactive, ref, useSlots, useTemplateRef } from 'vue'
-import { COMPONENTS_MAP, mapZodTypeToComponent } from '../components_map'
+import { computed, reactive, ref, useTemplateRef } from 'vue'
+import AutoFormPrimitive from './AutoFormPrimitive.vue'
 
 const props = withDefaults(defineProps<{
   schema: T
@@ -24,74 +20,29 @@ const emit = defineEmits<{
   (e: 'submit', data: InferOutput<T>): void
 }>()
 
-const slots = useSlots()
 const state = reactive({ ...props.initialState })
-
-defineExpose({ submit })
-
 const formRef = useTemplateRef('form')
 const loading = ref(false)
-const shape = (props.schema as z.ZodObject<any>).shape
+
+// Only resolve config needed for the submit button — full defaults live in AutoFormPrimitive.
+const appConfig = computed<AutoFormConfig>(() => {
+  return defu(props.config, useAppConfig().autoForm)
+})
 
 const isButtonDisabled = computed(() => !props.schema.safeParse(state).success)
 
-const defaults: Partial<AutoFormConfig> = {
-  components: COMPONENTS_MAP,
-  theme: {
-    wFull: true,
-  },
-}
-
-const appConfig = computed<AutoFormConfig>(() => {
-  return defu(props.config, useAppConfig().autoForm, defaults)
+const submitButton = computed(() => {
+  if (appConfig.value?.submit !== false)
+    return appConfig.value?.submit
+  return undefined
 })
 
-const fields = computed(() => {
-  return Object.entries(shape).map(([key, zodType]: [string, any]) => {
-    const result = mapZodTypeToComponent(key, zodType, appConfig.value, state)
-    if (!result)
-      return null
+const submitButtonProps = computed(() => ({
+  'aria-disabled': isButtonDisabled.value,
+  ...submitButton.value?.props,
+}))
 
-    const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
-
-    const defaultProps = {
-      class: appConfig.value?.theme?.wFull ? 'w-full' : '',
-    }
-
-    return {
-      key,
-      formField: {
-        name: key,
-        slots: findSlots(key),
-        ...parseMeta(meta, key),
-      },
-      component: meta?.input?.component ?? result.component,
-      props: defu(defaultProps, meta?.input?.props, result.componentProps ?? {}),
-    }
-  }).filter((field): field is NonNullable<typeof field> => field != null)
-})
-
-function findSlots(key: string): string[] {
-  return Object.keys(slots)
-    .filter(name => name.startsWith(`${key}-`))
-    .map(name => name.slice(key.length + 1))
-}
-
-function parseMeta(meta: any, key: string) {
-  return {
-    label: meta.title ?? upperFirst(splitByCase(key).join(' ').toLowerCase()),
-    required: meta.required,
-    description: meta.description,
-    hint: meta.hint,
-    help: meta.help,
-    class: meta.theme?.floatRight ? 'flex items-center justify-between text-left' : '',
-  }
-}
-
-function updateFieldValue(key: string, value: any) {
-  // Intentionally mutate reactive state
-  ;(state as Record<string, any>)[key] = value
-}
+defineExpose({ submit })
 
 async function onSubmit(event: FormSubmitEvent<InferOutput<T>>) {
   event.preventDefault()
@@ -107,71 +58,34 @@ async function onSubmit(event: FormSubmitEvent<InferOutput<T>>) {
 function submit() {
   formRef.value?.submit()
 }
-
-const submitButton = computed(() => {
-  if (appConfig.value?.submit !== false)
-    return appConfig.value?.submit
-  return undefined
-})
-
-const submitButtonProps = computed(() => {
-  return {
-    'aria-disabled': isButtonDisabled.value,
-    ...submitButton.value?.props,
-  }
-})
 </script>
 
 <template>
-  <UForm
+  <AutoFormPrimitive
     ref="form"
     :schema="schema"
-    :state="(state as any)"
-    class="space-y-4"
+    :state="(state as Record<string, any>)"
+    :config="config"
     @submit="onSubmit"
   >
-    <slot name="before-fields" />
+    <template v-for="(_, name) in $slots" #[name]="slotData">
+      <slot :name="name" v-bind="slotData ?? {}" />
+    </template>
 
-    <UFormField
-      v-for="field in fields"
-      :key="field.key"
-      :ui="{ description: 'text-left' }"
-      v-bind="field.formField"
-    >
-      <template v-for="slot in field.formField.slots" #[slot]>
-        <slot :name="`${field.key}-${slot}`" />
-      </template>
-
-      <slot
-        :name="field.key"
-        :field="field.key"
-        :state="(state as Record<string, any>)"
-      >
-        <component
-          :is="field.component"
-          v-bind="field.props"
-          :model-value="(state as Record<string, any>)[field.key]"
-          @update:model-value="(value: any) => updateFieldValue(field.key, value)"
-        >
-          <slot :name="`${field.key}-content`" />
-        </component>
+    <template #submit>
+      <slot name="submit" :disabled="isButtonDisabled">
+        <div v-if="appConfig?.submit !== false">
+          <template v-if="submitButton?.component">
+            <component :is="submitButton.component" v-bind="submitButtonProps" />
+          </template>
+          <UButton
+            v-else
+            type="submit"
+            label="Send"
+            v-bind="submitButtonProps"
+          />
+        </div>
       </slot>
-    </UFormField>
-
-    <slot name="after-fields" />
-
-    <slot name="submit" :disabled="isButtonDisabled">
-      <div v-if="appConfig?.submit !== false">
-        <template v-if="submitButton?.component">
-          <component :is="submitButton?.component" v-bind="submitButtonProps" />
-        </template>
-        <UButton
-          v-else
-          type="submit"
-          label="Send"
-          v-bind="submitButtonProps"
-        />
-      </div>
-    </slot>
-  </UForm>
+    </template>
+  </AutoFormPrimitive>
 </template>
