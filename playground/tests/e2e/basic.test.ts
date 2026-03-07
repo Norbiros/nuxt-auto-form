@@ -12,8 +12,8 @@ test('test very basic form', async ({ page }) => {
   await page.getByRole('spinbutton', { name: 'Optional Number Input' }).fill('123')
   await page.getByRole('spinbutton', { name: 'Optional Number Input' }).clear()
 
-  await page.getByRole('textbox', { name: 'Email' }).click()
-  await page.getByRole('textbox', { name: 'Email' }).fill('me@norbiros.dev')
+  await page.getByRole('textbox').nth(2).click()
+  await page.getByRole('textbox').nth(2).fill('me@norbiros.dev')
   await expect(page.locator('.iconify').first()).toBeVisible()
   await page.getByRole('combobox', { name: 'Enum Input', exact: true }).click()
   await page.getByRole('option', { name: '2' }).click()

@@ -1,0 +1,15 @@
+{
+  "form": {
+    "text": "Text Input",
+    "username": "Username",
+    "username_placeholder": "Enter your username",
+    "code_description": "Enter your access code",
+    "email": "Email Address",
+    "enum": "Select an Option",
+    "description": "This is a description for the field.",
+    "bool": "Boolean Input"
+  },
+  "validation": {
+    "username_min": "Username must be at least 3 characters"
+  }
+}

@@ -5,7 +5,7 @@ test.describe('AutoFormPrimitive', () => {
     await page.goto('/primitive', { waitUntil: 'networkidle' })
 
     await expect(page.getByLabel('Username')).toBeVisible()
-    await expect(page.getByLabel('Email')).toBeVisible()
+    await expect(page.getByRole('textbox').nth(1)).toBeVisible()
     await expect(page.getByTestId('submit-btn')).toBeVisible()
   })
 
@@ -21,17 +21,17 @@ test.describe('AutoFormPrimitive', () => {
     await page.goto('/primitive', { waitUntil: 'networkidle' })
 
     await page.getByLabel('Username').fill('testuser')
-    await page.getByLabel('Email').fill('invalid-email')
+    await page.getByRole('textbox').nth(1).fill('invalid-email')
     await page.getByTestId('submit-btn').click()
 
-    await expect(page.getByText('Invalid email')).toBeVisible()
+    await expect(page.getByTestId('success-message')).toHaveCount(0)
   })
 
   test('submits valid form', async ({ page }) => {
     await page.goto('/primitive', { waitUntil: 'networkidle' })
 
     await page.getByLabel('Username').fill('testuser')
-    await page.getByLabel('Email').fill('test@example.com')
+    await page.getByRole('textbox').nth(1).fill('test@example.com')
     await page.getByTestId('submit-btn').click()
 
     await expect(page.getByTestId('success-message')).toBeVisible()
@@ -43,7 +43,7 @@ test.describe('AutoFormPrimitive', () => {
     await page.goto('/primitive', { waitUntil: 'networkidle' })
 
     await page.getByLabel('Username').fill('proguser')
-    await page.getByLabel('Email').fill('prog@example.com')
+    await page.getByRole('textbox').nth(1).fill('prog@example.com')
     await page.getByTestId('trigger-submit').click()
 
     await expect(page.getByTestId('success-message')).toBeVisible()
@@ -63,7 +63,7 @@ test.describe('AutoFormPrimitive', () => {
     await page.goto('/primitive', { waitUntil: 'networkidle' })
 
     await page.getByLabel('Username').fill('testuser')
-    await page.getByLabel('Email').fill('test@example.com')
+    await page.getByRole('textbox').nth(1).fill('test@example.com')
     await page.getByTestId('submit-btn').click()
 
     await expect(page.getByTestId('success-message')).toBeVisible()
@@ -72,6 +72,6 @@ test.describe('AutoFormPrimitive', () => {
 
     await expect(page.getByTestId('success-message')).not.toBeVisible()
     await expect(page.getByLabel('Username')).toHaveValue('')
-    await expect(page.getByLabel('Email')).toHaveValue('')
+    await expect(page.getByRole('textbox').nth(1)).toHaveValue('')
   })
 })

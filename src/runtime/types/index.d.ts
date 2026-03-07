@@ -40,6 +40,27 @@ export interface AutoFormConfig {
    * ```
    */
   components?: ComponentsMap
+
+  /**
+   * Custom meta string preprocessors that transform prefixed strings in `meta()`.
+   * The `$` prefix and `:` suffix are added automatically to keys.
+   *
+   * @example
+   * ```ts
+   * metaStringProcessors: {
+   *   upper: value => value.toUpperCase(),
+   *   slug: value => value.trim().toLowerCase().replace(/\s+/g, '-'),
+   * }
+   * ```
+   *
+   * @see https://nuxt-auto-form.norbiros.dev/customization/preprocessors
+   */
+  metaStringProcessors?: Record<string, (value: string, context: {
+    key: string
+    path: string
+    meta: Record<string, any>
+    config: AutoFormConfig
+  }) => any>
 }
 
 declare module 'nuxt/schema' {

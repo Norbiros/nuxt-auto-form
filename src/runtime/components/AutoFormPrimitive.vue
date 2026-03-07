@@ -9,6 +9,7 @@ import defu from 'defu'
 import { splitByCase, upperFirst } from 'scule'
 import { computed, useSlots, useTemplateRef } from 'vue'
 import { COMPONENTS_MAP, mapZodTypeToComponent } from '../components_map'
+import { useMetaProcessor } from '../utils/useMetaProcessor'
 
 const props = defineProps<{
   schema: T
@@ -43,13 +44,16 @@ const appConfig = computed<AutoFormConfig>(() => {
   return defu(props.config, useAppConfig().autoForm, defaults)
 })
 
+const { processFieldMeta } = useMetaProcessor(appConfig)
+
 const fields = computed(() => {
   return Object.entries(shape).map(([key, zodType]: [string, any]) => {
     const result = mapZodTypeToComponent(key, zodType, appConfig.value, props.state)
     if (!result)
       return null
 
-    const meta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
+    const rawMeta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
+    const meta = processFieldMeta(rawMeta, key)
 
     const defaultProps = {
       class: appConfig.value?.theme?.wFull ? 'w-full' : '',

@@ -6,5 +6,8 @@ export default defineAppConfig({
         color: 'primary',
       },
     },
+    metaStringProcessors: {
+      upper: (value: string) => value.toUpperCase(),
+    },
   },
 })
