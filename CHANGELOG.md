@@ -1,6 +1,56 @@
 # Changelog
 
 
+## v0.6.0
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.5.0...v0.6.0)
+
+
+Major changes for this release include:
+- [`AutoFormModal`](https://nuxt-auto-form.norbiros.dev/components/form-modal) - component for modal-based forms
+- [`AutoFormPrimitive`](https://nuxt-auto-form.norbiros.dev/components/form-primitive) - basic reusable form component that matches as close as possible `NuxtUI`'s `UForm` component
+- Improved support for optional fields
+- Added support for i18n using [preprocessors](https://nuxt-auto-form.norbiros.dev/customization/preprocessors#built-in-i18n)
+
+### 🚀 Enhancements
+
+- Document exposed methods for `<AutoForm/>` ([c46bc77](https://github.com/Norbiros/nuxt-auto-form/commit/c46bc77))
+- Mark button as `aria-disabled` instead of really disabling it ([e5e7ef3](https://github.com/Norbiros/nuxt-auto-form/commit/e5e7ef3))
+- Add support for optional fields ([600c48b](https://github.com/Norbiros/nuxt-auto-form/commit/600c48b))
+- Add AutoFormModal component for modal-based forms ([98acbe7](https://github.com/Norbiros/nuxt-auto-form/commit/98acbe7))
+- Change logo depending on color theme ([#27](https://github.com/Norbiros/nuxt-auto-form/pull/27))
+- Add meta string processors for custom transformations in AutoForm ([0dd0c18](https://github.com/Norbiros/nuxt-auto-form/commit/0dd0c18))
+- **ci:** New publish workflow used for Trusted Publishing ([f9ec7e8](https://github.com/Norbiros/nuxt-auto-form/commit/f9ec7e8))
+- Forward `error` event emission in `<AutoForm/>` ([#15](https://github.com/Norbiros/nuxt-auto-form/pull/15))
+
+### 🩹 Fixes
+
+- **ci:** Resolve issues related to playwright browser installation ([438b447](https://github.com/Norbiros/nuxt-auto-form/commit/438b447))
+
+### 💅 Refactors
+
+- Optional and nullable field handling in components map ([690b315](https://github.com/Norbiros/nuxt-auto-form/commit/690b315))
+- Extract AutoFormPrimitive for reusable form logic ([bf390b3](https://github.com/Norbiros/nuxt-auto-form/commit/bf390b3))
+- Unify bg colors with Nuxt UI semantic classes and add dark/light mode code highlighting ([52d30c6](https://github.com/Norbiros/nuxt-auto-form/commit/52d30c6))
+- Make `AutoForm` use the `AutoFormPrimitive` component ([be581e2](https://github.com/Norbiros/nuxt-auto-form/commit/be581e2))
+
+### 📖 Documentation
+
+- Enhance documentation with improved layout and examples ([2339658](https://github.com/Norbiros/nuxt-auto-form/commit/2339658))
+
+### 🏡 Chore
+
+- **deps:** ⚠️  Update dependencies (`@nuxt/ui` v4, `@nuxt` v4.3) ([03968b6](https://github.com/Norbiros/nuxt-auto-form/commit/03968b6))
+
+#### ⚠️ Breaking Changes
+
+- **deps:** ⚠️  Update dependencies (`@nuxt/ui` v4, `@nuxt` v4.3) ([03968b6](https://github.com/Norbiros/nuxt-auto-form/commit/03968b6))
+
+### ❤️ Contributors
+
+- Norbiros <norbiros@protonmail.com>
+- Sanielia
+
 ## v0.5.0
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.4.3...v0.5.0)
