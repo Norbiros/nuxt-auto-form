@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
-import type { FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
+import type { FormErrorEvent, FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
 import type * as z from 'zod'
 import type { AutoFormConfig } from '../types'
 import { useAppConfig } from '#app'
@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   (e: 'submit', data: InferOutput<T>): void
+  (e: 'error', payload: FormErrorEvent): void
 }>()
 
 const state = reactive({ ...props.initialState })
@@ -67,6 +68,7 @@ function submit() {
     :state="(state as Record<string, any>)"
     :config="config"
     @submit="onSubmit"
+    @error="emit('error', $event)"
   >
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData ?? {}" />
