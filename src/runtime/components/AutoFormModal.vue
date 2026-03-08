@@ -7,7 +7,7 @@ import UModal from '@nuxt/ui/components/Modal.vue'
 import { computed, reactive, toRaw, useTemplateRef } from 'vue'
 import AutoFormPrimitive from './AutoFormPrimitive.vue'
 
-interface Props {
+export interface Props {
   open?: boolean
   schema: T
   initialState?: Partial<InferInput<T>>
