@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
-import type { FormErrorEvent, FormSubmitEvent, InferInput, InferOutput } from '@nuxt/ui'
+import type { FormErrorEvent, FormSubmitEvent, InferOutput } from '@nuxt/ui'
 import type * as z from 'zod'
-import type { AutoFormConfig } from '../types'
+import type { AutoFormConfig, AutoFormState } from '../types'
 import { useAppConfig } from '#app'
 import UButton from '@nuxt/ui/components/Button.vue'
 import defu from 'defu'
@@ -10,22 +10,21 @@ import AutoFormPrimitive from './AutoFormPrimitive.vue'
 
 const props = withDefaults(defineProps<{
   schema: T
-  initialState?: Partial<InferInput<T>>
+  initialState?: AutoFormState<T>
   config?: AutoFormConfig
 }>(), {
   initialState: () => ({}),
 })
 
 const emit = defineEmits<{
-  (e: 'submit', data: InferOutput<T>): void
-  (e: 'error', payload: FormErrorEvent): void
+  submit: [data: InferOutput<T>]
+  error: [payload: FormErrorEvent]
 }>()
 
-const state = reactive({ ...props.initialState })
+const state = reactive({ ...props.initialState }) as AutoFormState<T>
 const formRef = useTemplateRef('form')
 const loading = ref(false)
 
-// Only resolve config needed for the submit button — full defaults live in AutoFormPrimitive.
 const appConfig = computed<AutoFormConfig>(() => {
   return defu(props.config, useAppConfig().autoForm)
 })
@@ -65,7 +64,7 @@ function submit() {
   <AutoFormPrimitive
     ref="form"
     :schema="schema"
-    :state="(state as Record<string, any>)"
+    :state="state as AutoFormState<T>"
     :config="config"
     @submit="onSubmit"
     @error="emit('error', $event)"

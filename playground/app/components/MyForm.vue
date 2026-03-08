@@ -73,9 +73,9 @@ function onSubmit(data: Record<string, any>) {
         Who?
       </NuxtLink>
     </template>
-    <template #custom_bool="{ field, state }">
+    <template #custom_bool="{ state }">
       <USelect
-        v-model="state[field]"
+        v-model="state.custom_bool"
         :items="[
           {
             label: 'False',

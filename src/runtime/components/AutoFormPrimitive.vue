@@ -1,7 +1,8 @@
 <script setup lang="ts" generic="T extends z.ZodObject<any>">
-import type { FormError, FormErrorEvent, FormSubmitEvent, InferOutput } from '@nuxt/ui'
+import type { Form, FormError, FormErrorEvent, FormSubmitEvent, InferOutput } from '@nuxt/ui'
 import type * as z from 'zod'
-import type { AutoFormConfig } from '../types'
+import type { ComponentDefinition } from '../components_map'
+import type { AutoFormConfig, AutoFormState } from '../types'
 import { useAppConfig } from '#app'
 import UForm from '@nuxt/ui/components/Form.vue'
 import UFormField from '@nuxt/ui/components/FormField.vue'
@@ -11,12 +12,25 @@ import { computed, useSlots, useTemplateRef } from 'vue'
 import { COMPONENTS_MAP, mapZodTypeToComponent } from '../components_map'
 import { useMetaProcessor } from '../utils/useMetaProcessor'
 
+type FormInstance = Form<T>
+type FieldKey = keyof AutoFormState<T> & string
+
+interface FieldDefinition {
+  key: FieldKey
+  formField: ReturnType<typeof parseMeta> & {
+    name: FieldKey
+    slots: string[]
+  }
+  component: ComponentDefinition['component']
+  props: NonNullable<ComponentDefinition['componentProps']>
+}
+
 const props = defineProps<{
   schema: T
-  state: Record<string, any>
+  state: AutoFormState<T>
   config?: AutoFormConfig
   id?: string | number
-  validate?: (state: Partial<InferOutput<T>>) => FormError[] | Promise<FormError[]>
+  validate?: (state: AutoFormState<T>) => FormError[] | Promise<FormError[]>
   validateOn?: ('input' | 'change' | 'blur')[]
   disabled?: boolean
   validateOnInputDelay?: number
@@ -30,7 +44,7 @@ const emits = defineEmits<{
 }>()
 
 const slots = useSlots()
-const formRef = useTemplateRef('form')
+const formRef = useTemplateRef<FormInstance>('form')
 const shape = (props.schema as z.ZodObject<any>).shape
 
 const defaults: Partial<AutoFormConfig> = {
@@ -46,11 +60,14 @@ const appConfig = computed<AutoFormConfig>(() => {
 
 const { processFieldMeta } = useMetaProcessor(appConfig)
 
-const fields = computed(() => {
-  return Object.entries(shape).map(([key, zodType]: [string, any]) => {
+const fields = computed<FieldDefinition[]>(() => {
+  const resolvedFields: FieldDefinition[] = []
+
+  for (const key of Object.keys(shape) as FieldKey[]) {
+    const zodType = shape[key]
     const result = mapZodTypeToComponent(key, zodType, appConfig.value, props.state)
     if (!result)
-      return null
+      continue
 
     const rawMeta = typeof zodType.meta === 'function' ? zodType.meta() || {} : {}
     const meta = processFieldMeta(rawMeta, key)
@@ -59,7 +76,7 @@ const fields = computed(() => {
       class: appConfig.value?.theme?.wFull ? 'w-full' : '',
     }
 
-    return {
+    resolvedFields.push({
       key,
       formField: {
         name: key,
@@ -68,8 +85,10 @@ const fields = computed(() => {
       },
       component: meta?.input?.component ?? result.component,
       props: defu(defaultProps, meta?.input?.props, result.componentProps ?? {}),
-    }
-  }).filter((field): field is NonNullable<typeof field> => field != null)
+    })
+  }
+
+  return resolvedFields
 })
 
 function findSlots(key: string): string[] {
@@ -89,9 +108,12 @@ function parseMeta(meta: any, key: string) {
   }
 }
 
-function updateFieldValue(key: string, value: any) {
-  // Intentionally mutate reactive state prop
-  ;(props.state as Record<string, any>)[key] = value
+function getFieldValue(key: string) {
+  return props.state[key as keyof AutoFormState<T>]
+}
+
+function updateFieldValue(key: string, value: unknown) {
+  ;(props.state as Record<string, unknown>)[key] = value
 }
 
 const formProps = computed(() => ({
@@ -127,8 +149,8 @@ defineExpose({
     :id="formProps.id"
     ref="form"
     :schema="formProps.schema"
-    :state="(formProps.state as any)"
-    :validate="formProps.validate as any"
+    :state="formProps.state"
+    :validate="formProps.validate"
     :validate-on="formProps.validateOn"
     :disabled="formProps.disabled"
     :validate-on-input-delay="formProps.validateOnInputDelay"
@@ -158,8 +180,8 @@ defineExpose({
         <component
           :is="field.component"
           v-bind="field.props"
-          :model-value="(props.state as Record<string, any>)[field.key]"
-          @update:model-value="(value: any) => updateFieldValue(field.key, value)"
+          :model-value="getFieldValue(field.key)"
+          @update:model-value="(value: unknown) => updateFieldValue(field.key, value)"
         >
           <slot :name="`${field.key}-content`" />
         </component>
