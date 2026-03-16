@@ -20,6 +20,14 @@ export interface AutoFormConfig {
     props?: ButtonProps
   } | false
 
+  /** AutoFormModal default button labels */
+  modal?: {
+    /** Default label for the submit button. @default 'Submit' */
+    submitLabel?: string
+    /** Default label for the cancel/close button. @default 'Cancel' */
+    closeLabel?: string
+  }
+
   /**
    * Customize default form styles
    */

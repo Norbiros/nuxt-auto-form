@@ -2,8 +2,10 @@
 import type { FormSubmitEvent, InferOutput, ModalProps } from '@nuxt/ui'
 import type * as z from 'zod'
 import type { AutoFormConfig, AutoFormState } from '../types'
+import { useAppConfig } from '#app'
 import UButton from '@nuxt/ui/components/Button.vue'
 import UModal from '@nuxt/ui/components/Modal.vue'
+import defu from 'defu'
 import { computed, reactive, toRaw, useTemplateRef } from 'vue'
 import AutoFormPrimitive from './AutoFormPrimitive.vue'
 
@@ -11,19 +13,15 @@ export interface AutoFormModalProps<TSchema extends z.ZodObject<any>> {
   open?: boolean
   schema: TSchema
   initialState?: AutoFormState<TSchema>
-  config?: AutoFormConfig
   title?: string
   description?: string
-  submitLabel?: string
-  closeLabel?: string
+  config?: AutoFormConfig
   modalProps?: Partial<ModalProps>
 }
 
 const props = withDefaults(defineProps<AutoFormModalProps<T>>(), {
   open: false,
   initialState: () => ({}),
-  submitLabel: 'Submit',
-  closeLabel: 'Cancel',
   modalProps: () => ({}),
 })
 
@@ -31,6 +29,18 @@ const emit = defineEmits<{
   'submit': [data: InferOutput<T>]
   'update:open': [value: boolean]
 }>()
+
+const defaults: Partial<AutoFormConfig> = {
+  modal: { submitLabel: 'Submit', closeLabel: 'Cancel' },
+}
+
+const appConfig = computed<AutoFormConfig>(() => {
+  return defu(
+    props.config,
+    useAppConfig().autoForm,
+    defaults,
+  )
+})
 
 const state = reactive<AutoFormState<T>>({ ...props.initialState })
 const formRef = useTemplateRef('form')
@@ -82,13 +92,13 @@ function close() {
     <template #footer>
       <slot name="footer" :disabled="isButtonDisabled" :submit="() => formRef?.form?.submit()" :close="close">
         <UButton
-          :label="closeLabel"
+          :label="appConfig.modal?.closeLabel"
           color="neutral"
           variant="outline"
           @click="close"
         />
         <UButton
-          :label="submitLabel"
+          :label="appConfig.modal?.submitLabel"
           :disabled="isButtonDisabled"
           @click="formRef?.form?.submit()"
         />
