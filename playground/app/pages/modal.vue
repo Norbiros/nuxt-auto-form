@@ -59,8 +59,7 @@ function _triggerExternalSubmit() {
       title="Test Form Modal"
       description="Fill in the form below"
       :schema="basicSchema"
-      submit-label="Save"
-      close-label="Cancel"
+      :config="{ modal: { submitLabel: 'Save', closeLabel: 'Cancel' } }"
       @submit="onSubmit"
     />
 
@@ -71,7 +70,7 @@ function _triggerExternalSubmit() {
       description="Edit the existing data"
       :schema="advancedSchema"
       :initial-state="initialData"
-      submit-label="Update"
+      :config="{ modal: { submitLabel: 'Update' } }"
       data-testid="initial-modal"
       @submit="onSubmit"
     />
