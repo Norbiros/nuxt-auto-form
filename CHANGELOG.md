@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.6.1
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.6.0...v0.6.1)
+
+> [!IMPORTANT]
+> If you are using the `closeLabel` or `submitLabel` props in `AutoFormModal`, update your code to use the new configuration format:
+>
+> `:config="{ modal: { submitLabel: 'Save', closeLabel: 'Cancel' } }"`
+
+### 🚀 Enhancements
+
+- Add global config for `AutoFormModal` button labels ([#28](https://github.com/Norbiros/nuxt-auto-form/pull/28))
+
+### ❤️ Contributors
+
+- Lajczi ([@lajczi](https://github.com/lajczi))
+
 ## v0.6.0
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.5.0...v0.6.0)
