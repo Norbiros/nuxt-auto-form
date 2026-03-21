@@ -98,9 +98,14 @@ function findSlots(key: string): string[] {
 }
 
 function parseMeta(meta: any, key: string, config: AutoFormConfig) {
-  const showLabel = meta.title !== false && config?.theme?.label !== false
+  const enableDefaultTitles = config?.theme?.enableDefaultTitles !== false
+  const label = typeof meta.title === 'string'
+    ? meta.title
+    : meta.title === undefined && enableDefaultTitles
+      ? upperFirst(splitByCase(key).join(' ').toLowerCase())
+      : undefined
   return {
-    label: showLabel ? (meta.title ?? upperFirst(splitByCase(key).join(' ').toLowerCase())) : undefined,
+    label,
     required: meta.required,
     description: meta.description,
     hint: meta.hint,

@@ -38,11 +38,11 @@ export interface AutoFormConfig {
      */
     wFull?: boolean
     /**
-     * Render field labels globally. Set to `false` to hide all labels.
-     * Can be overridden per-field via `meta().title = false`.
+     * Generate default labels from field names globally. Set to `false` to disable auto-generated labels.
+     * Manually set titles via `meta().title` will still render regardless of this setting.
      * @default true
      */
-    label?: boolean
+    enableDefaultTitles?: boolean
   }
 
   /**

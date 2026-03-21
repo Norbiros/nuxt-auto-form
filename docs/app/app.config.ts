@@ -38,9 +38,9 @@ export default defineAppConfig({
     colorMode: false,
     links: [{
       'icon': 'i-simple-icons-npm',
-      'to': 'https://www.npmjs.com/package/nuxt-auto-form',
+      'to': 'https://npmx.dev/package/@norbiros/nuxt-auto-form',
       'target': '_blank',
-      'aria-label': 'Nuxt Auto Form on npmjs.com',
+      'aria-label': 'Nuxt Auto Form on npmx.dev',
     }, {
       'icon': 'i-simple-icons-github',
       'to': 'https://github.com/Norbiros/nuxt-auto-form',
@@ -60,8 +60,8 @@ export default defineAppConfig({
         target: '_blank',
       }, {
         icon: 'i-simple-icons-npm',
-        label: 'View on npmjs.com',
-        to: 'https://www.npmjs.com/package/nuxt-auto-form',
+        label: 'View on npmx.dev',
+        to: 'https://npmx.dev/package/@norbiros/nuxt-auto-form',
         target: '_blank',
       }, {
         icon: 'i-lucide-puzzle',
