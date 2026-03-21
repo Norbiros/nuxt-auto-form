@@ -17,6 +17,14 @@ export default defineNuxtModule<ModuleOptions>({
       return
     }
 
+    // Ensure @nuxt/ui's componentDetection includes components used by this module
+    const uiOptions = (nuxt.options as any).ui
+    if (uiOptions?.experimental?.componentDetection) {
+      const required = ['Button', 'Checkbox', 'Form', 'FormField', 'Input', 'InputNumber', 'Modal', 'Select']
+      const existing = Array.isArray(uiOptions.experimental.componentDetection) ? uiOptions.experimental.componentDetection : []
+      uiOptions.experimental.componentDetection = [...new Set([...existing, ...required])]
+    }
+
     const resolver = createResolver(import.meta.url)
 
     addTypeTemplate({
