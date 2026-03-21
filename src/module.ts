@@ -1,8 +1,8 @@
+import type { AutoFormConfig } from './runtime/types'
 import { addComponent, addComponentsDir, addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { ensureDependencies } from './utils/packages'
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
+export type ModuleOptions = AutoFormConfig
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -13,6 +13,9 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {},
   async setup(options, nuxt) {
     nuxt.options.runtimeConfig.public.autoForm = options as any
+    // Inject module options into app config as defaults so useAppConfig().autoForm picks them up
+    // User's app.config.ts takes precedence via Nuxt's app config merging
+    nuxt.options.appConfig.autoForm = options as any
     if (!await ensureDependencies()) {
       return
     }
