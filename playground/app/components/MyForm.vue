@@ -53,6 +53,9 @@ const schema = z.object({
   multiple_input: z
     .array(z.enum(ENUM_MULTIPLE))
     .meta({ title: 'Multiple Enum Input' }),
+  title_null_field: z.string()
+    .optional()
+    .meta({ title: null }),
 })
 
 function onSubmit(data: Record<string, any>) {
