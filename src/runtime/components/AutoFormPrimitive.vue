@@ -81,7 +81,7 @@ const fields = computed<FieldDefinition[]>(() => {
       formField: {
         name: key,
         slots: findSlots(key),
-        ...parseMeta(meta, key),
+        ...parseMeta(meta, key, appConfig.value),
       },
       component: meta?.input?.component ?? result.component,
       props: defu(defaultProps, meta?.input?.props, result.componentProps ?? {}),
@@ -97,9 +97,15 @@ function findSlots(key: string): string[] {
     .map(name => name.slice(key.length + 1))
 }
 
-function parseMeta(meta: any, key: string) {
+function parseMeta(meta: any, key: string, config: AutoFormConfig) {
+  const enableDefaultTitles = config?.theme?.enableDefaultTitles !== false
+  const label = typeof meta.title === 'string'
+    ? meta.title
+    : meta.title === undefined && enableDefaultTitles
+      ? upperFirst(splitByCase(key).join(' ').toLowerCase())
+      : undefined
   return {
-    label: meta.title ?? upperFirst(splitByCase(key).join(' ').toLowerCase()),
+    label,
     required: meta.required,
     description: meta.description,
     hint: meta.hint,

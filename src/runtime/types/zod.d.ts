@@ -36,12 +36,13 @@ declare module 'zod' {
     /**
      * Field label displayed in the form's label row.
      * Maps directly to `UFormField.label`.
+     * Set to `null` to hide the label for this field.
      *
      * @remarks Added by `nuxt-auto-form`
      * @default Field name in PascalCase with spaces
      * @see https://ui.nuxt.com/components/form-field#description
      */
-    title?: string
+    title?: string | null
 
     /**
      * Marks the field as required in the UI (asterisk, aria-required).

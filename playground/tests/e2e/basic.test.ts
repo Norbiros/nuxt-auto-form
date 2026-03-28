@@ -1,5 +1,11 @@
 import { expect, test } from '@nuxt/test-utils/playwright'
 
+test('title null field has no label', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'networkidle' })
+
+  await expect(page.getByLabel('Title null field')).not.toBeVisible()
+})
+
 test('test very basic form', async ({ page }) => {
   await page.goto('/', { waitUntil: 'networkidle' })
 
