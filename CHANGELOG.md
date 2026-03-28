@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v0.6.2
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.6.0...v0.6.2)
+
+### 🚀 Enhancements
+
+- Add global config for `AutoFormModal` button labels ([#28](https://github.com/Norbiros/nuxt-auto-form/pull/28))
+- Make field label rendering optional ([#30](https://github.com/Norbiros/nuxt-auto-form/pull/30))
+
+### 🩹 Fixes
+
+- Remove manual `pnpm publish` command from the `release` script ([0d83992](https://github.com/Norbiros/nuxt-auto-form/commit/0d83992))
+
+### 📖 Documentation
+
+- Update npm package link from `npmjs.com` to `npmx.dev` ([0512608](https://github.com/Norbiros/nuxt-auto-form/commit/0512608))
+
+### 🏡 Chore
+
+- **release:** V0.6.1 ([113f2c5](https://github.com/Norbiros/nuxt-auto-form/commit/113f2c5))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+- Lajczi ([@lajczi](https://github.com/lajczi))
+
 ## v0.6.1
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.6.0...v0.6.1)
