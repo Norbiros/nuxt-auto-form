@@ -51,7 +51,7 @@ const state = {
 
 async function onSubmit(_data: z.infer<typeof schema>) {
   // Send data to the server
-  // BTW I suggest using nuxt-auto-form for that
+  // BTW I suggest using nuxt-open-fetch for that: https://nuxt-open-fetch.norbiros.dev
   //
   // await useNuxtApp().$auth('/account/submit_personal_information', {
   //   method: 'POST',
