@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import UButton from '@nuxt/ui/components/Button.vue'
 import UInput from '@nuxt/ui/components/Input.vue'
-import { ref } from 'vue'
+import { ref, useId } from 'vue'
 
 const show = ref(false)
 const input = defineModel<string>({ default: '' })
+const inputId = useId()
 </script>
 
 <template>
   <UInput
+    :id="inputId"
     v-model="input"
     :type="show ? 'text' : 'password'"
     :ui="{ trailing: 'pe-1' }"
@@ -21,7 +23,7 @@ const input = defineModel<string>({ default: '' })
         :icon="show ? 'i-lucide-eye-off' : 'i-lucide-eye'"
         :aria-label="show ? 'Hide password' : 'Show password'"
         :aria-pressed="show"
-        aria-controls="password"
+        :aria-controls="inputId"
         @click="show = !show"
       />
     </template>
