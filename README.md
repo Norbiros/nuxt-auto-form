@@ -13,6 +13,8 @@ A Nuxt module for generating [Nuxt UI](https://ui.nuxt.com) forms from Zod 4 sch
 * [Documentation](https://nuxt-auto-form.norbiros.dev)
 * [StackBlitz playground](https://stackblitz.com/github/Norbiros/nuxt-auto-form/tree/master/playground?file=app%2Fcomponents%2FMyForm.vue)
 
+![Nuxt Auto Form screenshot](./.github/assets/screenshot.png)
+
 ## Features
 
 * Generates form fields from Zod schemas
