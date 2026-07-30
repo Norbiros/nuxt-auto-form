@@ -5,54 +5,30 @@ export default defineAppConfig({
       neutral: 'slate',
     },
   },
-  uiPro: {
-    footer: {
-      slots: {
-        root: 'border-t border-default',
-        left: 'text-sm text-muted',
-      },
-    },
-  },
   seo: {
-    siteName: 'Nuxt Auto Form',
+    title: 'Nuxt Auto Form',
+    description: 'Auto-generate Nuxt UI forms from Zod 4 schemas.',
   },
   header: {
-    title: '',
-    to: '/',
+    title: 'Nuxt Auto Form',
     logo: {
-      alt: 'N',
+      alt: 'Nuxt Auto Form',
       light: '/logo_light.svg',
       dark: '/logo_dark.svg',
     },
-    search: true,
-    colorMode: true,
-    links: [{
-      'icon': 'i-simple-icons-github',
-      'to': 'https://github.com/Norbiros/nuxt-auto-form',
-      'target': '_blank',
-      'aria-label': 'GitHub',
-    }],
   },
-  footer: {
-    credits: `© ${new Date().getFullYear()}`,
-    colorMode: false,
-    links: [{
-      'icon': 'i-simple-icons-npm',
-      'to': 'https://npmx.dev/package/@norbiros/nuxt-auto-form',
-      'target': '_blank',
-      'aria-label': 'Nuxt Auto Form on npmx.dev',
-    }, {
-      'icon': 'i-simple-icons-github',
-      'to': 'https://github.com/Norbiros/nuxt-auto-form',
-      'target': '_blank',
-      'aria-label': 'Nuxt Auto Form on GitHub',
-    }],
+  github: {
+    url: 'https://github.com/Norbiros/nuxt-auto-form',
+    branch: 'master',
+    rootDir: 'docs',
+  },
+  socials: {
+    npm: 'https://npmx.dev/package/@norbiros/nuxt-auto-form',
   },
   toc: {
-    title: 'Table of Contents',
+    title: 'On this page',
     bottom: {
       title: 'Community',
-      edit: 'https://github.com/Norbiros/nuxt-auto-form/edit/master/docs/content',
       links: [{
         icon: 'i-lucide-star',
         label: 'Star on GitHub',

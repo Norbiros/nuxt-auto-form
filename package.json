@@ -73,6 +73,7 @@
     "changelogen": "^0.6.2",
     "eslint": "^10.0.1",
     "eslint-plugin-format": "^1.4.0",
+    "h3": "^1.15.11",
     "nuxt": "^4.3.1",
     "typescript": "~5.9.3",
     "vitest": "^4.0.18",

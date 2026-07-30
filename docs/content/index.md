@@ -1,7 +1,7 @@
 ---
-seo:
-  title: Nuxt Auto Form
-  description: Auto-generate Nuxt UI forms from Zod 4 schemas.
+title: Auto-generate Nuxt UI forms
+description: Auto-generate Nuxt UI forms from Zod, Valibot, Yup, and ArkType schemas.
+navigation: false
 ---
 
 ::hero
@@ -13,18 +13,12 @@ align: center
 ui:
   container: '!pt-24 !pb-16'
 ---
-
 #default
   :::code-comparison
   :::
 ::
 
 ::u-page-section
----
-ui:
-  container: '!'
----
-
 #title
 Powerful features built-in
 
@@ -55,7 +49,6 @@ From modals to custom components, everything you need to build production-ready 
 ui:
   container: '!py-30'
 ---
-
 #title
 Save time. Write less. Build faster.
 
@@ -74,8 +67,8 @@ Save time. Write less. Build faster.
   :::u-page-feature
   ---
   icon: i-simple-icons-nuxtdotjs
-  target: _blank
   to: https://ui.nuxt.com
+  target: _blank
   ---
   #title
   Powered by Nuxt UI
@@ -87,8 +80,8 @@ Save time. Write less. Build faster.
   :::u-page-feature
   ---
   icon: i-simple-icons-zod
-  target: _blank
   to: https://zod.dev
+  target: _blank
   ---
   #title
   Powered by Zod 4
@@ -137,7 +130,6 @@ align: center
 ui:
   container: '!py-30'
 ---
-
 #title
 Get started in seconds
 
@@ -149,8 +141,7 @@ Install the module and start building forms instantly.
   ---
   to: /getting-started
   size: xl
-  icon: i-lucide-arrow-right
-  trailing: true
+  trailing-icon: i-lucide-arrow-right
   ---
   View Documentation
   :::
@@ -162,7 +153,6 @@ Install the module and start building forms instantly.
   size: xl
   variant: outline
   icon: i-lucide-play
-  trailing: false
   ---
   Try Playground
   :::

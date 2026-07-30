@@ -8,12 +8,12 @@ defineProps<{
 </script>
 
 <template>
-  <div class="grid lg:grid-cols-2 gap-8 items-center" :class="{ 'lg:grid-flow-dense': reverse }">
-    <div :class="{ 'lg:col-start-2 lg:justify-self-end lg:max-w-md': reverse }" class="space-y-3">
+  <div class="grid items-center gap-8 lg:grid-cols-2" :class="{ 'lg:grid-flow-dense': reverse }">
+    <div class="space-y-3" :class="{ 'lg:col-start-2 lg:max-w-md lg:justify-self-end': reverse }">
       <h3 class="text-2xl font-bold">
         {{ title }}
       </h3>
-      <p class="text-lg text-muted-foreground">
+      <p class="text-lg text-muted">
         {{ description }}
       </p>
     </div>
