@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import { codeToHtml } from 'shiki'
-import { computed, ref, watch } from 'vue'
-
-const colorMode = useColorMode()
-const isDark = computed(() => colorMode.value === 'dark')
-
 const withAutoForm = `<script setup lang="ts">
 import * as z from 'zod'
 
 const schema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(8),
 })
 
@@ -26,7 +20,7 @@ const withoutAutoForm = `<script setup lang="ts">
 import * as z from 'zod'
 
 const schema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(8),
 })
 
@@ -44,40 +38,29 @@ function onSubmit(data: Schema) {
 
 <template>
   <UForm :schema="schema" :state="state" @submit="onSubmit">
-    <UFormGroup label="Email" name="email">
+    <UFormField label="Email" name="email">
       <UInput v-model="state.email" type="email" />
-    </UFormGroup>
-
-    <UFormGroup label="Password" name="password">
+    </UFormField>
+    <UFormField label="Password" name="password">
       <UInput v-model="state.password" type="password" />
-    </UFormGroup>
-
+    </UFormField>
     <UButton type="submit">Submit</UButton>
   </UForm>
 </template>`
 
-const highlightedWith = ref('')
-const highlightedWithout = ref('')
-
-function highlightCode(code: string) {
-  return codeToHtml(code, { lang: 'vue', theme: isDark.value ? 'material-theme-palenight' : 'github-light' })
+function lineCount(code: string) {
+  return code.trim().split('\n').length
 }
-
-async function updateHighlightedCode() {
-  highlightedWith.value = await highlightCode(withAutoForm)
-  highlightedWithout.value = await highlightCode(withoutAutoForm)
-}
-
-watch(isDark, updateHighlightedCode)
-updateHighlightedCode()
 </script>
 
 <template>
-  <div class="space-y-10 py-4 w-full">
-    <div class="text-center space-y-3">
-      <h2 class="text-4xl font-bold flex items-center justify-center gap-2 ml-4">
+  <div class="w-full space-y-10 py-4">
+    <div class="space-y-3 text-center">
+      <h2 class="text-3xl font-bold sm:text-4xl flex items-center justify-center gap-2">
         Write 50-60% less code
         <UTooltip text="Calculated based on real-world PRs" :ui="{ content: 'h-12' }">
+          <UIcon name="i-lucide-info" class="w-4 h-4 text-muted cursor-help" />
+
           <template #content>
             <div class="space-y-1">
               <p>Based on code reductions from:</p>
@@ -89,43 +72,38 @@ updateHighlightedCode()
               </ULink>
             </div>
           </template>
-          <UIcon name="i-lucide-info" class="w-4 h-4 text-muted cursor-help" />
         </UTooltip>
       </h2>
-      <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+      <p class="mx-auto max-w-2xl text-lg text-muted">
         AutoForm generates all the boilerplate for you. <br> Focus on your schema, not repetitive form code.
       </p>
     </div>
 
-    <div class="grid lg:grid-cols-2 gap-6">
-      <div class="space-y-3 w-full overflow-auto">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xl font-semibold flex items-center gap-2">
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="min-w-0 space-y-3">
+        <div class="flex items-center justify-between gap-4">
+          <h3 class="font-semibold text-highlighted flex items-center gap-2">
             <span class="text-green-500">✓</span>
             With Nuxt Auto Form
           </h3>
           <UBadge color="success" variant="subtle" size="lg">
-            14 lines
+            {{ lineCount(withAutoForm) }} lines
           </UBadge>
         </div>
-        <CodeWindow show-dots no-padding>
-          <CodeBlock :code="highlightedWith" />
-        </CodeWindow>
+        <CodeSnippet :code="withAutoForm" class="text-left [&>div]:my-0 [&_pre]:max-h-120 [&_pre]:overflow-y-auto" />
       </div>
 
-      <div class="space-y-3 w-full overflow-auto">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xl font-semibold flex items-center gap-2">
+      <div class="min-w-0 space-y-3 opacity-70">
+        <div class="flex items-center justify-between gap-4">
+          <h3 class="font-semibold text-highlighted flex items-center gap-2">
             <span class="text-red-500">✗</span>
             Without Nuxt Auto Form
           </h3>
           <UBadge color="error" variant="subtle" size="lg">
-            33 lines
+            {{ lineCount(withoutAutoForm) }} lines
           </UBadge>
         </div>
-        <CodeWindow show-dots no-padding class="opacity-60">
-          <CodeBlock :code="highlightedWithout" />
-        </CodeWindow>
+        <CodeSnippet :code="withoutAutoForm" class="text-left [&>div]:my-0 [&_pre]:max-h-120 [&_pre]:overflow-y-auto" />
       </div>
     </div>
   </div>

@@ -63,6 +63,10 @@ async function onSubmit(_data: z.infer<typeof schema>) {
   await refreshNuxtData()
   navigateTo('/panel')
 }
+
+function updateField(state: Record<string, unknown>, field: string, value: boolean) {
+  state[field] = value
+}
 </script>
 
 <template>
@@ -83,7 +87,7 @@ async function onSubmit(_data: z.infer<typeof schema>) {
     <AutoForm :schema="schema" :initial-state="state" @submit="onSubmit">
       <template #is_vegetarian="{ field, state: stateValue }">
         <USelect
-          v-model="stateValue[field]"
+          :model-value="Boolean(stateValue[field])"
           :items="[
             {
               label: 'Meat diet',
@@ -94,6 +98,7 @@ async function onSubmit(_data: z.infer<typeof schema>) {
               value: true,
             },
           ]"
+          @update:model-value="updateField(stateValue, field, $event)"
         />
       </template>
     </AutoForm>

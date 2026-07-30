@@ -2,8 +2,8 @@
 import * as z from 'zod'
 
 const schema = z.object({
-  text: z.string().nonempty(),
-  enum: z.enum(['1', '2', '3']),
+  email: z.email(),
+  role: z.enum(['Developer', 'Designer', 'Founder']),
 })
 </script>
 

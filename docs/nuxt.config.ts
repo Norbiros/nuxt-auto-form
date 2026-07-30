@@ -1,52 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  extends: ['docus'],
+
   modules: [
     '@norbiros/nuxt-auto-form',
     '@nuxt/eslint',
-    '@nuxt/image',
-    '@nuxt/ui',
-    '@nuxt/content',
-    'nuxt-og-image',
-    'nuxt-llms',
   ],
 
   devtools: {
     enabled: true,
   },
 
-  experimental: {
-    componentIslands: {
-      selectiveClient: true,
-    },
+  site: {
+    name: 'Nuxt Auto Form',
   },
 
-  css: ['~/assets/css/main.css'],
-
-  content: {
-    build: {
-      markdown: {
-        toc: {
-          searchDepth: 1,
-        },
-        highlight: {
-          langs: ['diff'],
-        },
-      },
+  mdc: {
+    highlight: {
+      noApiRoute: false,
     },
-    experimental: { nativeSqlite: true },
   },
 
   compatibilityDate: '2026-02-21',
-
-  nitro: {
-    prerender: {
-      routes: [
-        '/',
-      ],
-      crawlLinks: true,
-      autoSubfolderIndex: false,
-    },
-  },
 
   eslint: {
     config: {
@@ -57,33 +32,13 @@ export default defineNuxtConfig({
     },
   },
 
-  icon: {
-    provider: 'iconify',
-  },
-
   llms: {
-    domain: 'https://docs-template.nuxt.dev/',
-    title: 'Nuxt Docs Template',
-    description: 'A template for building documentation with Nuxt UI Pro and Nuxt Content.',
+    domain: 'https://nuxt-auto-form.norbiros.dev',
+    title: 'Nuxt Auto Form',
+    description: 'Auto-generate Nuxt UI forms from Zod 4 schemas.',
     full: {
-      title: 'Nuxt Docs Template - Full Documentation',
-      description: 'This is the full documentation for the Nuxt Docs Template.',
+      title: 'Nuxt Auto Form - Full Documentation',
+      description: 'Complete documentation for Nuxt Auto Form.',
     },
-    sections: [
-      {
-        title: 'Getting Started',
-        contentCollection: 'docs',
-        contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/getting-started%' },
-        ],
-      },
-      {
-        title: 'Essentials',
-        contentCollection: 'docs',
-        contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/essentials%' },
-        ],
-      },
-    ],
   },
 })
