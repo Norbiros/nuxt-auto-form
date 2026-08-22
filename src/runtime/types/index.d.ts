@@ -79,7 +79,7 @@ export interface AutoFormConfig {
   }) => any>
 }
 
-declare module 'nuxt/schema' {
+declare module '@nuxt/schema' {
   interface AppConfigInput {
     /** Configuration related to `@norbiros/nuxt-auto-form` Nuxt module */
     autoForm?: AutoFormConfig | undefined
