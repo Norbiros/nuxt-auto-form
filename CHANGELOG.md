@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v0.6.3
+
+[compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.6.2...v0.6.3)
+
+### 🩹 Fixes
+
+- Use dynamic id for `aria-controls` in `PasswordToggle` ([63019f6](https://github.com/Norbiros/nuxt-auto-form/commit/63019f6))
+- Augment `@nuxt/schema` instead of `nuxt/schema` ([2803835](https://github.com/Norbiros/nuxt-auto-form/commit/2803835))
+
+### 💅 Refactors
+
+- **docs:** Migrate to `docus` ([248df44](https://github.com/Norbiros/nuxt-auto-form/commit/248df44))
+
+### 📖 Documentation
+
+- Revise README for clarity and additional details ([19dddb3](https://github.com/Norbiros/nuxt-auto-form/commit/19dddb3))
+- Suggest nuxt-open-fetch in real world example comment ([f43dcd0](https://github.com/Norbiros/nuxt-auto-form/commit/f43dcd0))
+- Add README screenshot ([72ae6c2](https://github.com/Norbiros/nuxt-auto-form/commit/72ae6c2))
+- Rollback `README.md` changes ([376aa56](https://github.com/Norbiros/nuxt-auto-form/commit/376aa56))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+- Lajczi ([@lajczi](https://github.com/lajczi))
+
 ## v0.6.2
 
 [compare changes](https://github.com/Norbiros/nuxt-auto-form/compare/v0.6.0...v0.6.2)
